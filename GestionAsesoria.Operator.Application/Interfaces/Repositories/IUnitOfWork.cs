@@ -1,0 +1,32 @@
+﻿using GestionAsesoria.Operator.Application.Interfaces.Services.ExternalRequest;
+using GestionAsesoria.Operator.Domain.Auditable;
+using System;
+using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories.Projects;
+
+namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
+{
+    public interface IUnitOfWork<TId> : IDisposable
+    {
+        IGenericRepositoryAsync<T, TId> Repository<T>() where T : AuditableEntity<TId>;
+        IEmailService EmailService { get; }
+        IMasterDataValueRepositoryAsync MasterDataValueRepository { get; }
+        IActorRepositoryAsync ActorRepository { get; }
+        IAdvisoringContractRepositoryAsync AdvisoringContractRepository { get; }
+        IAdvisoringRequestRepositoryAsync AdvisoringRequestRepository { get; }
+        IProjectRepositoryAsync ProjectRepository { get; }
+        IDocumentCollectionRepositoryAsync DocumentCollectionRepository { get; }
+        IProjectActorRepositoryAsync ProjectActorRepository { get; }
+        IFundingRepositoryAsync FundingRepository { get; }
+
+        Task<int> Commit(CancellationToken cancellationToken);
+        Task<int> CommitAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);
+        IDbTransaction BeginTransaction();
+        Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default);
+        Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> operation, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default);
+        Task Rollback();
+    }
+}
