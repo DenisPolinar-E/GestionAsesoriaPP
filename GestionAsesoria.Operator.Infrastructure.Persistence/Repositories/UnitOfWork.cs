@@ -1,10 +1,12 @@
 ﻿using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories.Identity;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories.Projects;
 using GestionAsesoria.Operator.Application.Interfaces.Services;
 using GestionAsesoria.Operator.Application.Interfaces.Services.ExternalRequest;
 using GestionAsesoria.Operator.Domain.Auditable;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Contexts;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Repositories;
+using GestionAsesoria.Operator.Infrastructure.Persistence.Repositories.Identity;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Repositories.Projects;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Repository;
 using LazyCache;
@@ -60,6 +62,9 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         public IDocumentCollectionRepositoryAsync DocumentCollectionRepository => _documentCollectionRepository ?? new DocumentCollectionRepositoryAsync(_dbContext);
         public IProjectActorRepositoryAsync ProjectActorRepository => _projectActorRepository ?? new ProjectActorRepositoryAsync(_dbContext);
         public IFundingRepositoryAsync FundingRepository => _fundingRepository ?? new FundingRepositoryAsync(_dbContext);
+        public IRequestPPPRepositoryAsync RequestPPPRepository => _requestPPPRepository ?? new RequestPPPRepositoryAsync(_dbContext);
+        public IRoleRepositoryAsync RoleRepository => _roleRepository ?? new RoleRepositoryAsync(_dbContext);
+        public IActorTypeRepositoryAsync ActorTypeRepository => _actorTypeRepository ?? new ActorTypeRepositoryAsync(_dbContext);
 
 
         private IMasterDataValueRepositoryAsync _masterDataValue => null!;
@@ -70,7 +75,9 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private IDocumentCollectionRepositoryAsync _documentCollectionRepository => null!;
         private IProjectActorRepositoryAsync _projectActorRepository => null!;
         private IFundingRepositoryAsync _fundingRepository => null!;
-
+        private IRequestPPPRepositoryAsync _requestPPPRepository => null!;
+        private IRoleRepositoryAsync _roleRepository => null;
+        private IActorTypeRepositoryAsync _actorTypeRepository => null!;
 
         public async Task<int> Commit(CancellationToken cancellationToken)
         {

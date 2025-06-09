@@ -326,5 +326,10 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:GestionAsesoria.Operator.WebApi.Controllers.v1.RequestPPPController.CreateAsync(CreateRequestPPPRequestDto)">
+            <summary>
+            Crea una nueva solicitud de PPP
+            </summary>
+        </member>
     </members>
 </doc>

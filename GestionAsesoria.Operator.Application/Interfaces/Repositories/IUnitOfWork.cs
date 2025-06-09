@@ -1,11 +1,12 @@
-﻿using GestionAsesoria.Operator.Application.Interfaces.Services.ExternalRequest;
+﻿using GestionAsesoria.Operator.Application.Interfaces.Repositories.Identity;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories.Projects;
+using GestionAsesoria.Operator.Application.Interfaces.Services.ExternalRequest;
 using GestionAsesoria.Operator.Domain.Auditable;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage;
-using GestionAsesoria.Operator.Application.Interfaces.Repositories.Projects;
 
 namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
 {
@@ -21,7 +22,9 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         IDocumentCollectionRepositoryAsync DocumentCollectionRepository { get; }
         IProjectActorRepositoryAsync ProjectActorRepository { get; }
         IFundingRepositoryAsync FundingRepository { get; }
-
+        IRequestPPPRepositoryAsync RequestPPPRepository { get; }
+        IRoleRepositoryAsync RoleRepository { get; }
+        IActorTypeRepositoryAsync ActorTypeRepository { get; }
         Task<int> Commit(CancellationToken cancellationToken);
         Task<int> CommitAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);
         IDbTransaction BeginTransaction();

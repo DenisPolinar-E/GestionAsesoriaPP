@@ -85,5 +85,12 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 
 
         }
+        [HttpGet("GetAllResearchAreas")]
+        public async Task<IActionResult> GetAllResearchAreas()
+        {
+            var result = await _mediator.Send(new GetAllResearchAreasQuery());
+            return Ok(result);
+        }
+
     }
 }

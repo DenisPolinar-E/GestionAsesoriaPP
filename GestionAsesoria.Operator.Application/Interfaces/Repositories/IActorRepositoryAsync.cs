@@ -15,6 +15,7 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         Task<List<Actor>> GetActorsByRoleAndStatusAsync(int roleId, bool isActive);
         Task<Actor> GetActorByIdWithDetailsAsync(int actorId);
         Task<Actor> GetActorWithDetailsAsync(int actorId);
+        Task<Actor> GetByCodeAsync(string code);
 
         // Consultas relacionadas con grupos, áreas y lineas de investigación
         Task<List<Actor>> GetActiveResearchGroupsAsync();
@@ -23,7 +24,9 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         Task<List<GetActorResearchAreaDto>> GetResearchAreasAsync(int? groupId);
         Task<List<GetActorResearchLineDto>> GetResearchLinesAsync(int? groupId);
         Task<List<GetActorTeacherDto>> GetTeachersAsync(int? groupId);
-
+        Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync(int? roleId);
+        Task<Actor> GetByIdentificationNumberAsync(string identificationNumber);
+        
 
         Task<Actor> GetResearchGroupWithDetailsAsync(int researchGroupId, int researchLineId, int researchAreaId, int actorId);
 

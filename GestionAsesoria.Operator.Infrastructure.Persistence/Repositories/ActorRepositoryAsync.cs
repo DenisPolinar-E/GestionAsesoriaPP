@@ -8,6 +8,7 @@ using GestionAsesoria.Operator.Domain.ConfigParameters.Container;
 using GestionAsesoria.Operator.Domain.Entities;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Contexts;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Repository;
+using GestionAsesoria.Operator.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
             _context = dbContext;
             _actors = _context.Set<Actor>();
             _memberships = _context.Set<Membership>();
+
+        }
+        public async Task<Actor> GetByIdentificationNumberAsync(string identificationNumber)
+        {
+            return await _actors.FirstOrDefaultAsync(a => a.IdentificationNumber == identificationNumber);
         }
 
         // Consultas LINQ puras
@@ -62,6 +68,10 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 .Where(m => m.ActorId == advisorId && m.IsActived)
                 .Include(m => m.MemberActor)
                 .ToListAsync();
+        }
+        public async Task<Actor> GetByCodeAsync(string code)
+        {
+            return await _actors.FirstOrDefaultAsync(a => a.Code == code);
         }
 
         public async Task<Actor> GetResearchGroupByIdAsync(int? groupId)
@@ -259,6 +269,19 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 })
                 .ToListAsync();
         }
+        public async Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync(int? roleId)
+        {
+
+            return await _actors
+                .Where(a => a.IsActived && a.MainRoleId == roleId) // roleId 14 es Área de Investigación
+                .Select(a => new GetAllActorResearchAreaDto
+                {
+                    Id = a.Id,
+                    FirstName = a.FirstName
+                })
+                .ToListAsync();
+        }
+
 
         public async Task<List<GetActorResearchLineDto>> GetResearchLinesAsync(int? groupId)
         {

@@ -54,7 +54,6 @@
   <ItemGroup>
     <Folder Include="DTOs\DocumentCollection\Response\" />
     <Folder Include="DTOs\Funding\Response\" />
-    <Folder Include="Features\Actors\Commands\" />
     <Folder Include="Features\Actors\Queries\GetResearchGroupDetails\" />
     <Folder Include="Features\Projects\Queries\" />
   </ItemGroup>

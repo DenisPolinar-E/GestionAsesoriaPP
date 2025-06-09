@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -97,6 +98,7 @@ public class ApplicationDbContext : AuditableContext
     public virtual DbSet<Thesis> Thesis { get; set; } = null!;
     public virtual DbSet<ThesisByAdvisoringContract> ThesisByAdvisoringContract { get; set; } = null!;
     public virtual DbSet<ThesisStatusHistory> ThesisStatusHistory { get; set; } = null!;
+    public virtual DbSet<RequestPPP> RequestPPP { get; set; } = null!;
 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
@@ -129,6 +131,78 @@ public class ApplicationDbContext : AuditableContext
         }
 
         base.OnModelCreating(builder);
+
+        builder.Entity<RequestPPP>(entity =>
+        {
+            entity.ToTable("RequestPPP");
+
+            entity.HasComment("Representa una solicitud de prácticas pre profesionales realizada por un estudiante.");
+
+            // --------- PROPIEDADES BÁSICAS ---------
+            entity.Property(r => r.Title)
+                .IsRequired()
+                .HasComment("Título del plan de prácticas pre profesionales.");
+
+            entity.Property(r => r.Plan)
+                .HasComment("Plan detallado de las prácticas.");
+
+            entity.Property(r => r.Functions)
+                .HasComment("Funciones asignadas al estudiante.");
+
+            entity.Property(r => r.Modality)
+                .HasComment("Modalidad de ejecución de las prácticas.");
+
+            entity.Property(r => r.AssignedArea)
+                .HasComment("Área a la que fue asignado el estudiante.");
+
+            entity.Property(r => r.Observations)
+                .HasComment("Observaciones generales sobre la solicitud.");
+
+            entity.Property(r => r.StartDate)
+                .HasComment("Fecha prevista de inicio de prácticas.");
+
+            entity.Property(r => r.EndDate)
+                .HasComment("Fecha prevista de fin de prácticas.");
+
+            // --------- RELACIONES FOREIGN KEY ---------
+
+            entity.HasOne(r => r.Student)
+                .WithMany()
+                .HasForeignKey(r => r.StudentId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_Student");
+
+            entity.HasOne(r => r.Company)
+                .WithMany()
+                .HasForeignKey(r => r.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_Company");
+
+            entity.HasOne(r => r.Representative)
+                .WithMany()
+                .HasForeignKey(r => r.RepresentativeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_Representative");
+
+            entity.HasOne(r => r.ResearchArea)
+                .WithMany()
+                .HasForeignKey(r => r.ResearchAreaId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_ResearchArea");
+
+            entity.HasOne(r => r.DocumentCollection)
+                .WithMany()
+                .HasForeignKey(r => r.DocumentCollectionId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_DocumentCollection");
+
+            entity.HasOne(r => r.Status)
+                .WithMany()
+                .HasForeignKey(r => r.StatusId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_Status");
+        });
+
 
         // Configuración de Identity
         builder.Entity<AcademicUser>(entity =>
@@ -681,6 +755,6 @@ public class ApplicationDbContext : AuditableContext
                 .HasForeignKey(spe => spe.DocumentCollectionId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
-
+        
     }
 }
