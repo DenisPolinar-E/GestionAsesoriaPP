@@ -201,6 +201,21 @@ public class ApplicationDbContext : AuditableContext
                 .HasForeignKey(r => r.StatusId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_RequestPPP_Status");
+
+            entity.HasOne(r => r.CompanyRepresentative)
+                .WithMany()
+                .HasForeignKey(r => r.CompanyRepresentativeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_RequestPPP_CompanyRepresentative");
+        });
+
+        builder.Entity<PreProfessionalInternship>(entity =>
+        {
+            entity.HasOne(p => p.Request)
+                .WithMany()
+                .HasForeignKey(p => p.RequestPPPId)
+                .OnDelete(DeleteBehavior.Restrict) // o .Cascade según lo que necesites
+                .HasConstraintName("PreProfessionalInternship_Request");
         });
 
 

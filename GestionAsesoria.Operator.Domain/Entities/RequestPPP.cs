@@ -52,6 +52,9 @@ namespace GestionAsesoria.Operator.Domain.Entities
         [Comment("ID del estado actual de la solicitud.")]
         public int StatusId { get; set; }
 
+        [Comment("ID del representante asignado por la empresa.")]
+        public int CompanyRepresentativeId { get; set; }
+
         // ===================== RELACIONES DE NAVEGACIÓN =====================
         [Comment("Entidad Actor que representa al estudiante.")]
         public virtual Actor Student { get; set; } = null!;
@@ -70,5 +73,8 @@ namespace GestionAsesoria.Operator.Domain.Entities
 
         [Comment("Entidad MasterDataValue que representa el estado de la solicitud.")]
         public virtual MasterDataValue Status { get; set; } = null!;
+
+        [Comment("Entidad Actor que representa al representante asignado por la empresa.")]
+        public virtual Actor CompanyRepresentative { get; set; } = null!;
     }
 }

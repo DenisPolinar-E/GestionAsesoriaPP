@@ -34,25 +34,28 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         //}
         public async Task<List<ListRequestPPPDto>> GetAllForListAsync()
         {
-         
-            return await _context.RequestPPP
-                .Include(r => r.Student) // navigation
+            return await _requestPPP
+                .AsNoTracking()
+                .Include(r => r.Student)
                 .Include(r => r.Company)
                 .Include(r => r.Representative)
                 .Include(r => r.ResearchArea)
                 .Include(r => r.Status)
+                .Include(r => r.DocumentCollection)
                 .Select(r => new ListRequestPPPDto
                 {
                     Id = r.Id,
                     Title = r.Title,
-                    Functions = r.Functions,
                     Modality = r.Modality,
-                    AssignedArea = r.AssignedArea,
-                    Plan = r.Plan,
-                    Observations = r.Observations,
+                    Status = r.Status.Name,
                     StartDate = r.StartDate,
-                    EndDate = r.EndDate
+                    EndDate = r.EndDate,
 
+                    StudentName = r.Student.FirstName + r.Student.SecondName,
+                    CompanyName = r.Company.FirstName,
+                    AcademicAreaName = r.ResearchArea.FirstName,
+
+                    DocumentUrl = r.DocumentCollection.OnlineUrl
                 })
                 .ToListAsync();
         }

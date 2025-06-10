@@ -14,9 +14,14 @@ public class CreateRequestPPPRequestDto
     // Company
     public string CompanyName { get; set; }
     public string CompanyRuc { get; set; }
-    public string CompanyRepresentativeName { get; set; }
     public string CompanyType { get; set; } // Público / Privado
     public string CompanyAddress { get; set; }
+
+    // CompanyRepresentative
+    public string CompanyRepresentativeFirstName { get; set; }
+    public string CompanyRepresentativeSecondName { get; set; }
+    public string CompanyRepresentativeDni { get; set; }
+
 
     // Representative
     public string RepresentativeFirstName { get; set; }

@@ -1,9 +1,12 @@
 ﻿using GestionAsesoria.Operator.Application.DTOs.DocumentCollection.Request;
+using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands;
 using GestionAsesoria.Operator.Shared.Wrapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GestionAsesoria.Operator.WebApi.Controllers.v1
@@ -37,6 +40,14 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             };
 
             var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        // GET: api/RequestPPP/list
+        [HttpGet("list")]
+        public async Task<ActionResult<List<ListRequestPPPDto>>> GetAllForListAsync()
+        {
+            var result = await _mediator.Send(new GetAllRequestPPPForListQuery());
             return Ok(result);
         }
     }

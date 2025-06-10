@@ -4,6 +4,7 @@ using GestionAsesoria.Operator.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250610015850_AddCompanyRepresentativeToRequestPPP")]
+    partial class AddCompanyRepresentativeToRequestPPP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1148,12 +1151,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("RequestPPPId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RequestPPPId");
 
                     b.ToTable("PreProfessionalInternship", t =>
                         {
@@ -2314,18 +2312,6 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("BusinessSetting");
-                });
-
-            modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", b =>
-                {
-                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.RequestPPP", "Request")
-                        .WithMany()
-                        .HasForeignKey("RequestPPPId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("PreProfessionalInternship_Request");
-
-                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternshipByAdvisoringContract", b =>

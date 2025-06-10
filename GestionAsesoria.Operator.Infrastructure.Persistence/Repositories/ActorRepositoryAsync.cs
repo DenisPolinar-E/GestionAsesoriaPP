@@ -37,6 +37,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
             return await _actors.FirstOrDefaultAsync(a => a.IdentificationNumber == identificationNumber);
         }
 
+
+
         // Consultas LINQ puras
         public async Task<List<Actor>> GetActorsByRoleAndStatusAsync(int roleId, bool isActive)
         {
