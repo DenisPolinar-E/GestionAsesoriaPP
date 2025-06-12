@@ -90,7 +90,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             var companyRepresentativeId = await GetOrCreateActorIdAsync(dto.CompanyRepresentativeDni, new Actor
             {
                 FirstName = dto.CompanyRepresentativeFirstName,
-                SecondName = dto.CompanyRepresentativeFirstName,
+                SecondName = dto.CompanyRepresentativeLastName,
                 IdentificationNumber = dto.CompanyRepresentativeDni,
                 StartDate = DateTime.UtcNow,
                 IsActived = true,
@@ -135,6 +135,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             requestPPP.CompanyRepresentativeId = companyRepresentativeId;
             requestPPP.StatusId = status.Id;
             requestPPP.ResearchAreaId = dto.ResearchAreaId;
+            requestPPP.StartDate = DateTime.UtcNow;    
 
 
             await _unitOfWork.RequestPPPRepository.AddAsync(requestPPP);
