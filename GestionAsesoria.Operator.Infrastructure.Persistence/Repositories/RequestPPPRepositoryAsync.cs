@@ -48,8 +48,10 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                     Title = r.Title,
                     Modality = r.Modality,
                     Status = r.Status.Name,
+
                     StartDate = r.StartDate,
-                    EndDate = r.EndDate,
+                    StartRequest = r.StartRequest,
+                    EndRequest = r.EndRequest,
 
                     StudentName = r.Student.FirstName + r.Student.SecondName,
                     CompanyName = r.Company.FirstName,

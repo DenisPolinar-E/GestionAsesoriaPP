@@ -19,7 +19,7 @@ public class CreateRequestPPPRequestDto
 
     // CompanyRepresentative
     public string CompanyRepresentativeFirstName { get; set; }
-    public string CompanyRepresentativeSecondName { get; set; }
+    public string CompanyRepresentativeLastName { get; set; }
     public string CompanyRepresentativeDni { get; set; }
 
 

@@ -24,7 +24,7 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         Task<List<GetActorResearchAreaDto>> GetResearchAreasAsync(int? groupId);
         Task<List<GetActorResearchLineDto>> GetResearchLinesAsync(int? groupId);
         Task<List<GetActorTeacherDto>> GetTeachersAsync(int? groupId);
-        Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync(int? roleId);
+        Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync();
         Task<Actor> GetByIdentificationNumberAsync(string identificationNumber);
         
 
