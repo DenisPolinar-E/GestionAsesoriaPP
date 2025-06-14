@@ -23,6 +23,7 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         IProjectActorRepositoryAsync ProjectActorRepository { get; }
         IFundingRepositoryAsync FundingRepository { get; }
         IRequestPPPRepositoryAsync RequestPPPRepository { get; }
+        ICompanyPracticeRepositoryAsync CompanyPracticeRepository { get; }
         IRoleRepositoryAsync RoleRepository { get; }
         IActorTypeRepositoryAsync ActorTypeRepository { get; }
         Task<int> Commit(CancellationToken cancellationToken);

@@ -65,6 +65,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         public IRequestPPPRepositoryAsync RequestPPPRepository => _requestPPPRepository ?? new RequestPPPRepositoryAsync(_dbContext);
         public IRoleRepositoryAsync RoleRepository => _roleRepository ?? new RoleRepositoryAsync(_dbContext);
         public IActorTypeRepositoryAsync ActorTypeRepository => _actorTypeRepository ?? new ActorTypeRepositoryAsync(_dbContext);
+        public ICompanyPracticeRepositoryAsync CompanyPracticeRepository => _companyPracticeRepository ?? new CompanyPracticeRepository(_dbContext);
+
 
 
         private IMasterDataValueRepositoryAsync _masterDataValue => null!;
@@ -76,6 +78,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private IProjectActorRepositoryAsync _projectActorRepository => null!;
         private IFundingRepositoryAsync _fundingRepository => null!;
         private IRequestPPPRepositoryAsync _requestPPPRepository => null!;
+        private ICompanyPracticeRepositoryAsync _companyPracticeRepository => null!;
         private IRoleRepositoryAsync _roleRepository => null;
         private IActorTypeRepositoryAsync _actorTypeRepository => null!;
 
