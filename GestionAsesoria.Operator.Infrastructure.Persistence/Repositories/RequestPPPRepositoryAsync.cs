@@ -59,6 +59,22 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 })
                 .ToListAsync();
         }
+        public async Task<RequestPPP?> GetByIdAsync(int id)
+        {
+            return await _requestPPP
+                .Include(x => x.Student)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task UpdateAsync(RequestPPP entity)
+        {
+            _context.RequestPPP.Update(entity);
+        }
+        public async Task AddInternshipAsync(PreProfessionalInternship internship)
+        {
+            await _context.PreProfessionalInternship.AddAsync(internship);
+        }
+
 
     }
 }
