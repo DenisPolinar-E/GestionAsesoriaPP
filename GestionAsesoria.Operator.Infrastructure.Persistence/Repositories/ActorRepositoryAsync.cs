@@ -271,9 +271,9 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 })
                 .ToListAsync();
         }
-        public async Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync(int? roleId)
+        public async Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync()
         {
-
+            var roleId = _settingsContainer.LocalResearchAreaSettings.ResearchAreaId;
             return await _actors
                 .Where(a => a.IsActived && a.MainRoleId == roleId) // roleId 14 es Área de Investigación
                 .Select(a => new GetAllActorResearchAreaDto

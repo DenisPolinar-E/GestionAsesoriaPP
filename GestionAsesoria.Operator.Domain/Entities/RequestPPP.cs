@@ -27,11 +27,16 @@ namespace GestionAsesoria.Operator.Domain.Entities
         [Comment("Observaciones generales sobre la solicitud.")]
         public string? Observations { get; set; }
 
+        [Comment("Fecha en la que se hizo la solicitud.")]
+        public DateTime? StartDate { get; set; } 
+
+
+
         [Comment("Fecha prevista de inicio de prácticas.")]
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartRequest { get; set; }
 
         [Comment("Fecha prevista de fin de prácticas.")]
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndRequest { get; set; }
 
         // ===================== CLAVES FORÁNEAS =====================
         [Comment("ID del estudiante solicitante.")]
