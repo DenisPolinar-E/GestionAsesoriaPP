@@ -27,6 +27,8 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         ITeacherPracticeRepositoryAsync TeacherPracticeRepository { get; }
 
         IRoleRepositoryAsync RoleRepository { get; }
+        IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository { get; }
+
         IActorTypeRepositoryAsync ActorTypeRepository { get; }
         Task<int> Commit(CancellationToken cancellationToken);
         Task<int> CommitAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);
