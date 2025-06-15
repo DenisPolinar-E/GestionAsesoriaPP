@@ -34,28 +34,49 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         //}
         public async Task<List<ListRequestPPPDto>> GetAllForListAsync()
         {
-         
-            return await _context.RequestPPP
-                .Include(r => r.Student) // navigation
+            return await _requestPPP
+                .AsNoTracking()
+                .Include(r => r.Student)
                 .Include(r => r.Company)
                 .Include(r => r.Representative)
                 .Include(r => r.ResearchArea)
                 .Include(r => r.Status)
+                .Include(r => r.DocumentCollection)
                 .Select(r => new ListRequestPPPDto
                 {
                     Id = r.Id,
                     Title = r.Title,
-                    Functions = r.Functions,
                     Modality = r.Modality,
-                    AssignedArea = r.AssignedArea,
-                    Plan = r.Plan,
-                    Observations = r.Observations,
-                    StartDate = r.StartDate,
-                    EndDate = r.EndDate
+                    Status = r.Status.Name,
 
+                    StartDate = r.StartDate,
+                    StartRequest = r.StartRequest,
+                    EndRequest = r.EndRequest,
+
+                    StudentName = r.Student.FirstName + r.Student.SecondName,
+                    CompanyName = r.Company.FirstName,
+                    AcademicAreaName = r.ResearchArea.FirstName,
+
+                    DocumentUrl = r.DocumentCollection.OnlineUrl
                 })
                 .ToListAsync();
         }
+        public async Task<RequestPPP?> GetByIdAsync(int id)
+        {
+            return await _requestPPP
+                .Include(x => x.Student)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task UpdateAsync(RequestPPP entity)
+        {
+            _context.RequestPPP.Update(entity);
+        }
+        public async Task AddInternshipAsync(PreProfessionalInternship internship)
+        {
+            await _context.PreProfessionalInternship.AddAsync(internship);
+        }
+
 
     }
 }

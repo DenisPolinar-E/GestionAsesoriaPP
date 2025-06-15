@@ -542,7 +542,7 @@ public partial class SettingsContainer
 
         public SettingsContainer(string tenantConnectionString)
         {
-                            LocalResearchGroupSettings = new  LocalResearchGroupSettings(tenantConnectionString);
+                   LocalResearchGroupSettings = new  LocalResearchGroupSettings(tenantConnectionString);
 
                    LocalResearchAreaSettings = new  LocalResearchAreaSettings(tenantConnectionString);
 

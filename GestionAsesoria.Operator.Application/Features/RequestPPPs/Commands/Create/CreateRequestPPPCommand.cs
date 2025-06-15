@@ -45,7 +45,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
 
             // === Obtener IDs relacionados ===
             var estudianteRoleId = await _unitOfWork.RoleRepository.GetIdByNameAsync("Estudiante");
-            var representanteRoleId = await _unitOfWork.RoleRepository.GetIdByNameAsync("Representante Legal");
+            var empleadoRoleId = await _unitOfWork.RoleRepository.GetIdByNameAsync("Empleado");
             var empresaRoleId = await _unitOfWork.RoleRepository.GetIdByNameAsync("Empresa");
 
             var personaNaturalTypeId = (await _unitOfWork.ActorTypeRepository.GetIdByNameAsync("Persona Natural")).Value;
@@ -57,7 +57,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             var facultadActorId = (await _unitOfWork.ActorRepository.GetByCodeAsync("FAC001")).Id;
 
             // === Crear o reutilizar actores ===
-            var student = await GetOrCreateActorAsync(dto.StudentDni, new Actor
+            var studentId = await GetOrCreateActorIdAsync(dto.StudentDni, new Actor
             {
                 FirstName = dto.StudentFirstName,
                 SecondName = dto.StudentLastName,
@@ -71,13 +71,12 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 ActorTypeId = personaNaturalTypeId,
                 IdentificationTypeId = dniTypeId,
                 ParentId = facultadActorId,
-                MainRoleId = estudianteRoleId.Value
+                MainRoleId = estudianteRoleId
             }, cancellationToken);
 
-            var company = await GetOrCreateActorAsync(dto.CompanyRuc, new Actor
+            var companyId = await GetOrCreateActorIdAsync(dto.CompanyRuc, new Actor
             {
                 FirstName = dto.CompanyName,
-                SecondName = dto.CompanyRepresentativeName,
                 ThirdName = dto.CompanyAddress,
                 IdentificationNumber = dto.CompanyRuc,
                 ClassifyActor = dto.CompanyType,
@@ -85,11 +84,23 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 IsActived = true,
                 ActorTypeId = personaJuridicaTypeId,
                 IdentificationTypeId = rucTypeId,
-                ParentId = facultadActorId,
-                MainRoleId = empresaRoleId.Value
+                MainRoleId = empresaRoleId
             }, cancellationToken);
 
-            var representative = await GetOrCreateActorAsync(dto.RepresentativeDni, new Actor
+            var companyRepresentativeId = await GetOrCreateActorIdAsync(dto.CompanyRepresentativeDni, new Actor
+            {
+                FirstName = dto.CompanyRepresentativeFirstName,
+                SecondName = dto.CompanyRepresentativeLastName,
+                IdentificationNumber = dto.CompanyRepresentativeDni,
+                StartDate = DateTime.UtcNow,
+                IsActived = true,
+                ActorTypeId = personaNaturalTypeId,
+                IdentificationTypeId = dniTypeId,
+                ParentId = companyId,
+                MainRoleId = empleadoRoleId
+            }, cancellationToken);
+
+            var representativeId = await GetOrCreateActorIdAsync(dto.RepresentativeDni, new Actor
             {
                 FirstName = dto.RepresentativeFirstName,
                 SecondName = dto.RepresentativeLastName,
@@ -101,27 +112,31 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 IsActived = true,
                 ActorTypeId = personaNaturalTypeId,
                 IdentificationTypeId = dniTypeId,
-                ParentId = facultadActorId,
-                MainRoleId = representanteRoleId.Value
+                ParentId = companyId,
+                MainRoleId = empleadoRoleId
             }, cancellationToken);
+
 
             // === Guardar documento si se envió ===
             int documentId = 0;
             if (command.PlanDocument?.File != null)
             {
-                documentId = await GuardarDocumentoPlanAsync(command.PlanDocument, $"Plan de prácticas: {dto.Title}", student.Id, cancellationToken);
+                documentId = await GuardarDocumentoPlanAsync(command.PlanDocument, $"Plan de prácticas: {dto.Title}", studentId, cancellationToken);
             }
 
             // === Crear solicitud PPP ===
             var status = await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("REQ_PENDING");
 
             var requestPPP = _mapper.Map<RequestPPP>(dto);
-            requestPPP.StudentId = student.Id;
-            requestPPP.CompanyId = company.Id;
-            requestPPP.RepresentativeId = representative.Id;
+            requestPPP.StudentId = studentId;
+            requestPPP.CompanyId = companyId;
+            requestPPP.RepresentativeId = representativeId;
             requestPPP.DocumentCollectionId = documentId;
+            requestPPP.CompanyRepresentativeId = companyRepresentativeId;
             requestPPP.StatusId = status.Id;
             requestPPP.ResearchAreaId = dto.ResearchAreaId;
+            requestPPP.StartDate = DateTime.UtcNow;    
+
 
             await _unitOfWork.RequestPPPRepository.AddAsync(requestPPP);
             await _unitOfWork.Commit(cancellationToken);
@@ -134,15 +149,20 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
 
 
 
-        private async Task<Actor> GetOrCreateActorAsync(string dni, Actor newActor, CancellationToken cancellationToken)
+        private async Task<int> GetOrCreateActorIdAsync(string dni, Actor newActor, CancellationToken cancellationToken)
         {
             var existing = await _unitOfWork.ActorRepository.GetByIdentificationNumberAsync(dni);
-            if (existing != null) return existing;
+            if (existing != null)
+            {
+                return existing.Id;
+            }
 
             await _unitOfWork.ActorRepository.AddAsync(newActor);
             await _unitOfWork.Commit(cancellationToken);
-            return newActor;
+            return newActor.Id;
         }
+
+
 
         private async Task<int> GuardarDocumentoPlanAsync(CreateDocumentCollectionRequestDto plan, string titulo, int actorId, CancellationToken cancellationToken)
         {

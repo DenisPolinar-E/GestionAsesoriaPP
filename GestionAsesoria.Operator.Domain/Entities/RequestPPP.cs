@@ -27,11 +27,16 @@ namespace GestionAsesoria.Operator.Domain.Entities
         [Comment("Observaciones generales sobre la solicitud.")]
         public string? Observations { get; set; }
 
+        [Comment("Fecha en la que se hizo la solicitud.")]
+        public DateTime? StartDate { get; set; } 
+
+
+
         [Comment("Fecha prevista de inicio de prácticas.")]
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartRequest { get; set; }
 
         [Comment("Fecha prevista de fin de prácticas.")]
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndRequest { get; set; }
 
         // ===================== CLAVES FORÁNEAS =====================
         [Comment("ID del estudiante solicitante.")]
@@ -52,6 +57,9 @@ namespace GestionAsesoria.Operator.Domain.Entities
         [Comment("ID del estado actual de la solicitud.")]
         public int StatusId { get; set; }
 
+        [Comment("ID del representante asignado por la empresa.")]
+        public int CompanyRepresentativeId { get; set; }
+
         // ===================== RELACIONES DE NAVEGACIÓN =====================
         [Comment("Entidad Actor que representa al estudiante.")]
         public virtual Actor Student { get; set; } = null!;
@@ -70,5 +78,8 @@ namespace GestionAsesoria.Operator.Domain.Entities
 
         [Comment("Entidad MasterDataValue que representa el estado de la solicitud.")]
         public virtual MasterDataValue Status { get; set; } = null!;
+
+        [Comment("Entidad Actor que representa al representante asignado por la empresa.")]
+        public virtual Actor CompanyRepresentative { get; set; } = null!;
     }
 }

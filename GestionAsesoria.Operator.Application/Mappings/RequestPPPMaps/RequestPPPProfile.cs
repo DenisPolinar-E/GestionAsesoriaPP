@@ -22,14 +22,15 @@ namespace GestionAsesoria.Operator.Application.Mappings.RequestPPPRequestPPPMaps
                 .ForMember(dest => dest.RepresentativeId, opt => opt.Ignore())
                 .ForMember(dest => dest.DocumentCollectionId, opt => opt.Ignore())
                 .ForMember(dest => dest.StatusId, opt => opt.Ignore())
-
+                .ForMember(dest => dest.CompanyRepresentativeId, opt => opt.Ignore())
                 // Ignorar navegación
                 .ForMember(dest => dest.Student, opt => opt.Ignore())
                 .ForMember(dest => dest.Company, opt => opt.Ignore())
                 .ForMember(dest => dest.Representative, opt => opt.Ignore())
                 .ForMember(dest => dest.ResearchArea, opt => opt.Ignore())
                 .ForMember(dest => dest.DocumentCollection, opt => opt.Ignore())
-                .ForMember(dest => dest.Status, opt => opt.Ignore());
+                .ForMember(dest => dest.Status, opt => opt.Ignore())
+                .ForMember(dest => dest.CompanyRepresentative, opt => opt.Ignore());
         }
     }
 }
