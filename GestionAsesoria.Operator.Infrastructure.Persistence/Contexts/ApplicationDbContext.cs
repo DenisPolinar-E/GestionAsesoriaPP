@@ -214,12 +214,13 @@ public class ApplicationDbContext : AuditableContext
 
         builder.Entity<PreProfessionalInternship>(entity =>
         {
-            entity.HasOne(p => p.Request)
+            entity.HasOne(p => p.RequestPPP)
                 .WithMany()
                 .HasForeignKey(p => p.RequestPPPId)
-                .OnDelete(DeleteBehavior.Restrict) // o .Cascade según lo que necesites
-                .HasConstraintName("PreProfessionalInternship_Request");
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
         });
+
 
 
         // Configuración de Identity

@@ -1,9 +1,11 @@
 using Asp.Versioning;
 using GestionAsesoria.Operator.Application.Extensions;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
 using GestionAsesoria.Operator.Application.Interfaces.Services;
 using GestionAsesoria.Operator.Application.Interfaces.Services.ExternalRequest;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Configurations;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Extensions;
+using GestionAsesoria.Operator.Infrastructure.Persistence.Repositories;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Services.ExternalRequest;
 using GestionAsesoria.Operator.Infrastructure.Shared.Services;
 using GestionAsesoria.Operator.WebApi.Extensions;
@@ -100,6 +102,9 @@ try
     builder.Services.AddLogging();
     builder.Services.AddControllers().AddValidators();
     builder.Services.AddRazorPages();
+
+    builder.Services.AddScoped<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
+
 
     builder.Services.AddApiVersioning(config =>
     {
