@@ -1,16 +1,17 @@
 ﻿using GestionAsesoria.Operator.Application.DTOs.DocumentCollection.Request;
+using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
 using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response;
-using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Assign;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries.GetRequestPPP;
 using GestionAsesoria.Operator.Shared.Wrapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
-using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
-using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Assign;
 
 namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 {
@@ -66,6 +67,13 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
         {
             var result = await _mediator.Send(new ApproveRequestPPPCommand { Model = dto });
             return Ok(result);
+        }
+        [HttpGet("getState/{id}")]
+        public async Task<ActionResult<StateRequestPPPByIdResponseDto>> GetStateRequestPPPById(int id)
+        {
+            var result = await _mediator.Send(new GetStateRequestPPPByIdQuery(id));
+            return Ok(result);
+
         }
 
     }

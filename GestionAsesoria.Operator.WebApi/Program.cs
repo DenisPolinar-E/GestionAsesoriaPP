@@ -103,8 +103,6 @@ try
     builder.Services.AddControllers().AddValidators();
     builder.Services.AddRazorPages();
 
-    builder.Services.AddScoped<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
-
 
     builder.Services.AddApiVersioning(config =>
     {
