@@ -4,6 +4,7 @@ using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Assign;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Update;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries.GetRequestPPP;
 using GestionAsesoria.Operator.Shared.Wrapper;
@@ -75,6 +76,12 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             return Ok(result);
 
         }
+        [HttpPut("updateState")]
+        public async Task<IActionResult> UpdateStateRequestPPPById([FromBody] UpdateStateRequestPPPByIdDto dto)
+        {
+            var result = await _mediator.Send(new UpdateStateRequestPPPByIdCommand { StateRequest=dto });
+            return Ok(result);
 
+        }
     }
 }

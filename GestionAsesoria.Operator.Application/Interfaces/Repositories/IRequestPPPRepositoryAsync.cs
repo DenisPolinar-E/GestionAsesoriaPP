@@ -14,6 +14,8 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         Task AddInternshipAsync(PreProfessionalInternship internship);
         Task<IEnumerable<StateRequestPPPByIdResponseDto>> GetStateRequestPPPByIdAsync(int id);
 
+        // Application/Interfaces/Repositories/IRequestPPPRepositoryAsync.cs
+        Task<bool> UpdateStateRequestPPPByIdAsync(int id, int newStatusId);
 
         //Task<string> GetEstadoByIdAsync(int id);
     }

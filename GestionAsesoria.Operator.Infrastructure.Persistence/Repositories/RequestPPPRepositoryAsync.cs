@@ -82,6 +82,19 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 .ToListAsync();
             return estado;
         }
+        public async Task<bool> UpdateStateRequestPPPByIdAsync(int id, int newStatusId)
+        {
+            var entity = await _requestPPP.FindAsync(id);
+            if (entity == null)
+                return false;
+
+            entity.StatusId = newStatusId;
+            // si necesitas cargar la navegación:
+            // entity.Status = await _context.MasterDataValue.FindAsync(newStatusId);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
 
     }
