@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
-using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Assign;
 
 namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 {
@@ -51,13 +50,6 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
         public async Task<ActionResult<List<ListRequestPPPDto>>> GetAllForListAsync()
         {
             var result = await _mediator.Send(new GetAllRequestPPPForListQuery());
-            return Ok(result);
-        }
-
-        [HttpPost("assign-adviser")]
-        public async Task<IActionResult> AssignAdviserAsync([FromBody] AssignAdviserToRequestPPPRequestDto dto)
-        {
-            var result = await _mediator.Send(new AssignAdviserToRequestPPPCommand { Model = dto });
             return Ok(result);
         }
 

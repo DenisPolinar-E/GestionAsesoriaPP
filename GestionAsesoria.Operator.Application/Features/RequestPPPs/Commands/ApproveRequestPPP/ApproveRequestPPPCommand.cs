@@ -35,30 +35,45 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.App
                 return await Result<int>.FailAsync("La solicitud no tiene asesor asignado.");
 
             entity.StatusId = approvedStatus.Id;
-
             await _unitOfWork.RequestPPPRepository.UpdateAsync(entity);
 
+            // Crear práctica
             var internship = new PreProfessionalInternship
             {
                 RequestPPPId = entity.Id
             };
+            await _unitOfWork.Repository<PreProfessionalInternship>().AddAsync(internship);
+            await _unitOfWork.Commit(cancellationToken);
 
-            await _unitOfWork.RequestPPPRepository.AddInternshipAsync(internship);
+            // Crear registro en tabla intermedia sin asesor aún
+            var internshipContract = new PreProfessionalInternshipByAdvisoringContract
+            {
+                PreProfessionalInternshipId = internship.Id,
+                AdvisoringContractId = 0,
+                IsActived = true
+            };
+
+
+            await _unitOfWork.Repository<PreProfessionalInternshipByAdvisoringContract>()
+                .AddAsync(internshipContract);
+
+
             await _unitOfWork.Commit(cancellationToken);
 
             return await Result<int>.SuccessAsync(internship.Id, "Solicitud aprobada y práctica registrada.");
         }
     }
-}
-namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.ApproveRequestPPP
-{
-    internal class ApproveRequestPPPCommand
-    {
-        public int RequestPPPId { get; set; }
 
-        public ApproveRequestPPPCommand(ApproveRequestPPPRequestDto dto)
+    namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.ApproveRequestPPP
+    {
+        internal class ApproveRequestPPPCommand
         {
-            RequestPPPId = dto.RequestPPPId;
+            public int RequestPPPId { get; set; }
+
+            public ApproveRequestPPPCommand(ApproveRequestPPPRequestDto dto)
+            {
+                RequestPPPId = dto.RequestPPPId;
+            }
         }
     }
 }

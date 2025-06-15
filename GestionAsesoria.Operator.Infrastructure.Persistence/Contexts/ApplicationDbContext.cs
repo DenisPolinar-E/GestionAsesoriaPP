@@ -92,6 +92,7 @@ public class ApplicationDbContext : AuditableContext
     public virtual DbSet<PreProfessionalInternship> PreProfessionalInternship { get; set; } = null!;
     public virtual DbSet<PreProfessionalInternshipByAdvisoringContract> PreProfessionalInternshipByAdvisoringContract { get; set; } = null!;
 
+
     public virtual DbSet<Role> Role { get; set; } = null!;
     public virtual DbSet<RoleByActorType> RoleByActorType { get; set; } = null!;
 
