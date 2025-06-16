@@ -1,7 +1,10 @@
-﻿using GestionAsesoria.Operator.Application.DTOs.Actor.Response.ActorResearchGroup;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using GestionAsesoria.Operator.Application.DTOs.Actor.Response.ActorResearchGroup;
 using GestionAsesoria.Operator.Application.DTOs.Generic.Response;
 using GestionAsesoria.Operator.Application.DTOs.MasterDataValues;
+using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Domain.ConfigParameters.Container;
 using GestionAsesoria.Operator.Domain.Entities;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Contexts;
 using GestionAsesoria.Operator.Infrastructure.Persistence.Repository;
@@ -9,9 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static GestionAsesoria.Operator.Shared.Constants.Permission.Permissions;
 using Tsp.Sigescom.Config;
-using GestionAsesoria.Operator.Domain.ConfigParameters.Container;
+using static GestionAsesoria.Operator.Shared.Constants.Permission.Permissions;
 
 namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
 {
@@ -75,23 +77,26 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
            .ToListAsync();
             return getAllAsync;
         }
+         
         public async Task<List<MasterDataValueResponseDto>> GetMethodProjectTypeListAsync()
-        {
-            var methodProjectType = _settingsContainer.LocalProjectSettings.MethodProjectTypeId;
-            return await _masterDataValue
-                 .Where(a => a.MasterDataId == _settingsContainer.LocalProjectSettings.MethodProjectTypeId)
-                 .Select(a => new MasterDataValueResponseDto
-                 {
-                     Id = a.Id,
-                     Name = a.Name
-                 })
-                 .ToListAsync();
-        }
+         {
+            //var methodProjectType = _settingsContainer.LocalProjectSettings.MethodProjectTypeId;
+            var methodProjectType = 1000;
+             return await _masterDataValue
+                  .Where(a => a.MasterDataId == methodProjectType)
+                  .Select(a => new MasterDataValueResponseDto
+                  {
+                      Id = a.Id,
+                      Name = a.Name
+                  })
+                  .ToListAsync();
+         }
         public async Task<List<MasterDataValueResponseDto>> GetODSObjectiveTypeListAsync()
         {
-            var ODSObjective = _settingsContainer.LocalProjectSettings.ODSObjectiveId;
+            //var ODSObjective = _settingsContainer.LocalProjectSettings.ODSObjectiveId;
+             var ODSObjective = 1001; 
             return await _masterDataValue
-                 .Where(a => a.MasterDataId == _settingsContainer.LocalProjectSettings.ODSObjectiveId)
+                 .Where(a => a.MasterDataId == ODSObjective)
                  .Select(a => new MasterDataValueResponseDto
                  {
                      Id = a.Id,
@@ -101,9 +106,10 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         }
         public async Task<List<MasterDataValueResponseDto>> GetClassificationProjectTypeListAsync()
         {
-            var ClassificationProjectType = _settingsContainer.LocalProjectSettings.ClassificationProjectTypeId;
+            //var ClassificationProjectType = _settingsContainer.LocalProjectSettings.ClassificationProjectTypeId;
+            var ClassificationProjectType = 1002;
             return await _masterDataValue
-                 .Where(a => a.MasterDataId == _settingsContainer.LocalProjectSettings.ClassificationProjectTypeId)
+                 .Where(a => a.MasterDataId == ClassificationProjectType)
                  .Select(a => new MasterDataValueResponseDto
                  {
                      Id = a.Id,
@@ -113,23 +119,24 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         }
 
         public async Task<List<MasterDataValueResponseDto>> GetFundingTypeListAsync()
-        {
-            var fundingType = _settingsContainer.LocalFundingSettings.FundingTypeId;
-            return await _masterDataValue
-                 .Where(a => a.MasterDataId == _settingsContainer.LocalFundingSettings.FundingTypeId)
-                 .Select(a => new MasterDataValueResponseDto
-                 {
-                     Id = a.Id,
-                     Name = a.Name
-                 })
-                 .ToListAsync();
-        }
-
+         {
+             var fundingType = _settingsContainer.LocalFundingSettings.FundingId;
+             return await _masterDataValue
+                  .Where(a => a.MasterDataId == fundingType)
+                  .Select(a => new MasterDataValueResponseDto
+                  {
+                      Id = a.Id,
+                      Name = a.Name
+                  })
+                  .ToListAsync();
+         }
+ 
         public async Task<List<MasterDataValueResponseDto>> GetAuthorTypeListAsync()
         {
-            var authorType = _settingsContainer.LocalActorProjectSettings.AuthorTypeId;
+            //var authorType = _settingsContainer.LocalActorProjectSettings.AuthorTypeId;
+            var authorType = 1003;
             return await _masterDataValue
-                 .Where(a => a.MasterDataId == _settingsContainer.LocalActorProjectSettings.AuthorTypeId)
+                 .Where(a => a.MasterDataId == authorType)
                  .Select(a => new MasterDataValueResponseDto
                  {
                      Id = a.Id,

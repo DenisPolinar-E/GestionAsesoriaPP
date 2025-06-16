@@ -9,6 +9,7 @@ public class CreateRequestPPPRequestDto
     public string StudentLastName { get; set; }
     public string StudentEmail { get; set; }
     public string StudentPhone { get; set; }
+    public string StudentGender { get; set; }
     public string StudentDni { get; set; }
 
     // Company
@@ -21,12 +22,14 @@ public class CreateRequestPPPRequestDto
     public string CompanyRepresentativeFirstName { get; set; }
     public string CompanyRepresentativeLastName { get; set; }
     public string CompanyRepresentativeDni { get; set; }
+    public string CompanyRepresentativeGender { get; set; }
 
 
     // Representative
     public string RepresentativeFirstName { get; set; }
     public string RepresentativeLastName { get; set; }
     public string RepresentativeDni { get; set; }
+    public string RepresentativeGender { get; set; }
     public string RepresentativeEmail { get; set; }
     public string RepresentativePhone { get; set; }
     public string RepresentativePosition { get; set; }
@@ -37,7 +40,7 @@ public class CreateRequestPPPRequestDto
     public string? Functions { get; set; }
     public string? Modality { get; set; }
     public string? AssignedArea { get; set; }
-    public string? Observations { get; set; }
+
     public int ResearchAreaId { get; set; }
 
     // Document
