@@ -16,12 +16,10 @@ namespace GestionAsesoria.Operator.Application.Features.Actors.Queries.GetActors
     internal class GetAllResearchAreasQueryHandler : IRequestHandler<GetAllResearchAreasQuery, Result<IEnumerable<GetAllActorResearchAreaDto>>>
     {
         private readonly IUnitOfWork<int> _unitOfWork;
-        private readonly SettingsContainer _settingsContainer;
 
         public GetAllResearchAreasQueryHandler(IUnitOfWork<int> unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _settingsContainer = LocalSettingContainer.Get();
         }
 
         public async Task<Result<IEnumerable<GetAllActorResearchAreaDto>>> Handle(GetAllResearchAreasQuery request, CancellationToken cancellationToken)

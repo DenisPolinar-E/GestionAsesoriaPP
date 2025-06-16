@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Tsp.Sigescom.Config;
 
 namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
 {
@@ -26,17 +27,20 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
         private readonly IUnitOfWork<int> _unitOfWork;
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _env;
+        private readonly SettingsContainer _settingsContainer;
 
         public CreateRequestPPPCommandHandler(
             IMapper mapper,
             IUnitOfWork<int> unitOfWork,
             IMediator mediator,
             IWebHostEnvironment env)
+
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _mediator = mediator;
             _env = env;
+            _settingsContainer = LocalSettingContainer.Get();
         }
 
         public async Task<Result<int>> Handle(CreateRequestPPPCommand command, CancellationToken cancellationToken)
@@ -51,8 +55,10 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             var personaNaturalTypeId = (await _unitOfWork.ActorTypeRepository.GetIdByNameAsync("Persona Natural")).Value;
             var personaJuridicaTypeId = (await _unitOfWork.ActorTypeRepository.GetIdByNameAsync("Persona Jurídica")).Value;
 
-            var dniTypeId = (await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("DNI")).Id;
-            var rucTypeId = (await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("RUC")).Id;
+            var StudentTypeId = (await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("EXTORDESTDP")).Id;
+            var OtrosTypeId = (await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("OTROS")).Id;
+            
+            
 
             var facultadActorId = (await _unitOfWork.ActorRepository.GetByCodeAsync("FAC001")).Id;
 
@@ -65,11 +71,11 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 IdentificationNumber = dto.StudentDni,
                 Email = dto.StudentEmail,
                 PhoneNumber = dto.StudentPhone,
-                ClassifyActor = "Estudiante Regular",
+                ClassifyActor = dto.StudentGender,
                 StartDate = DateTime.UtcNow,
                 IsActived = true,
                 ActorTypeId = personaNaturalTypeId,
-                IdentificationTypeId = dniTypeId,
+                IdentificationTypeId = StudentTypeId,
                 ParentId = facultadActorId,
                 MainRoleId = estudianteRoleId
             }, cancellationToken);
@@ -79,11 +85,11 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 FirstName = dto.CompanyName,
                 ThirdName = dto.CompanyAddress,
                 IdentificationNumber = dto.CompanyRuc,
-                ClassifyActor = dto.CompanyType,
+                ClassifyActor = "Entidad Externa - Empresa "+ dto.CompanyType,
                 StartDate = DateTime.UtcNow,
                 IsActived = true,
                 ActorTypeId = personaJuridicaTypeId,
-                IdentificationTypeId = rucTypeId,
+                IdentificationTypeId = OtrosTypeId,
                 MainRoleId = empresaRoleId
             }, cancellationToken);
 
@@ -92,10 +98,11 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 FirstName = dto.CompanyRepresentativeFirstName,
                 SecondName = dto.CompanyRepresentativeLastName,
                 IdentificationNumber = dto.CompanyRepresentativeDni,
+                ClassifyActor = dto.CompanyRepresentativeGender,
                 StartDate = DateTime.UtcNow,
                 IsActived = true,
                 ActorTypeId = personaNaturalTypeId,
-                IdentificationTypeId = dniTypeId,
+                IdentificationTypeId = OtrosTypeId,
                 ParentId = companyId,
                 MainRoleId = empleadoRoleId
             }, cancellationToken);
@@ -105,13 +112,14 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
                 FirstName = dto.RepresentativeFirstName,
                 SecondName = dto.RepresentativeLastName,
                 IdentificationNumber = dto.RepresentativeDni,
+                ClassifyActor = dto.RepresentativeGender,
                 Email = dto.RepresentativeEmail,
                 PhoneNumber = dto.RepresentativePhone,
-                ClassifyActor = dto.RepresentativePosition,
+                ThirdName = dto.RepresentativePosition,
                 StartDate = DateTime.UtcNow,
                 IsActived = true,
                 ActorTypeId = personaNaturalTypeId,
-                IdentificationTypeId = dniTypeId,
+                IdentificationTypeId = OtrosTypeId,
                 ParentId = companyId,
                 MainRoleId = empleadoRoleId
             }, cancellationToken);
@@ -125,7 +133,9 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             }
 
             // === Crear solicitud PPP ===
-            var status = await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("REQ_PENDING");
+            //var status = await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("REQ_PENDING");
+            var statePending = _settingsContainer.LocalRequestPPPSettings.StateRequestPPPId;
+
 
             var requestPPP = _mapper.Map<RequestPPP>(dto);
             requestPPP.StudentId = studentId;
@@ -133,10 +143,10 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             requestPPP.RepresentativeId = representativeId;
             requestPPP.DocumentCollectionId = documentId;
             requestPPP.CompanyRepresentativeId = companyRepresentativeId;
-            requestPPP.StatusId = status.Id;
+            requestPPP.StatusId = statePending;
             requestPPP.ResearchAreaId = dto.ResearchAreaId;
-            requestPPP.StartDate = DateTime.UtcNow;    
-
+            requestPPP.StartDate = DateTime.UtcNow;
+            
 
             await _unitOfWork.RequestPPPRepository.AddAsync(requestPPP);
             await _unitOfWork.Commit(cancellationToken);

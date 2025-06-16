@@ -25,9 +25,10 @@ namespace GestionAsesoria.Operator.Application.Mappings.Actors
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName));
 
             CreateMap<Actor, GetActorTeacherDto>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
-            .ForMember(dest => dest.SecondName, opt => opt.MapFrom(src => src.SecondName));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Code))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + (src.SecondName ?? "")))
+                .ForMember(dest => dest.InstitutionalEmail, opt => opt.MapFrom(src => src.Email));
 
             CreateMap<Actor, ActorResponseDto>()
             .ForMember(dest => dest.MainRoleId, opt => opt.MapFrom(src => src.Id))
