@@ -80,8 +80,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
          
         public async Task<List<MasterDataValueResponseDto>> GetMethodProjectTypeListAsync()
          {
-            //var methodProjectType = _settingsContainer.LocalProjectSettings.MethodProjectTypeId;
-            var methodProjectType = 1000;
+            var methodProjectType = _settingsContainer.LocalMethodProjectTypeSettings.MethodProjectTypeId;
+            
              return await _masterDataValue
                   .Where(a => a.MasterDataId == methodProjectType)
                   .Select(a => new MasterDataValueResponseDto
@@ -93,8 +93,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
          }
         public async Task<List<MasterDataValueResponseDto>> GetODSObjectiveTypeListAsync()
         {
-            //var ODSObjective = _settingsContainer.LocalProjectSettings.ODSObjectiveId;
-             var ODSObjective = 1001; 
+            var ODSObjective = _settingsContainer.LocalODSObjectiveSettings.ODSObjectiveId;
+             
             return await _masterDataValue
                  .Where(a => a.MasterDataId == ODSObjective)
                  .Select(a => new MasterDataValueResponseDto
@@ -133,7 +133,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
  
         public async Task<List<MasterDataValueResponseDto>> GetAuthorTypeListAsync()
         {
-            //var authorType = _settingsContainer.LocalActorProjectSettings.AuthorTypeId;
+            //  var authorType = _settingsContainer.LocalActorProjectSettings.AuthorTypeId;
             var authorType = 1003;
             return await _masterDataValue
                  .Where(a => a.MasterDataId == authorType)
