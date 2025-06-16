@@ -1627,7 +1627,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasComment("ID de la colección de documentos asociados.");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime?>("EndRequest")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha prevista de fin de prácticas.");
 
@@ -1656,6 +1656,10 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                         .HasComment("ID del área académica asignada.");
 
                     b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha en la que se hizo la solicitud.");
+
+                    b.Property<DateTime?>("StartRequest")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha prevista de inicio de prácticas.");
 

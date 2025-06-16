@@ -271,9 +271,9 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 })
                 .ToListAsync();
         }
-        public async Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync(int? roleId)
+        public async Task<List<GetAllActorResearchAreaDto>> GetAllResearchAreasAsync()
         {
-
+            var roleId = _settingsContainer.LocalResearchAreaSettings.ResearchAreaId;
             return await _actors
                 .Where(a => a.IsActived && a.MainRoleId == roleId) // roleId 14 es Área de Investigación
                 .Select(a => new GetAllActorResearchAreaDto
@@ -306,22 +306,52 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
 
         public async Task<List<GetActorTeacherDto>> GetTeachersAsync(int? groupId)
         {
-            var actorTeacher = _settingsContainer.LocalDocenteSettings.RoleDocenteId;
-            var query = _actors.Where(a => a.MainRoleId == actorTeacher && a.IsActived);
+            var actorTeacher = _settingsContainer.LocalDocenteSettings.DocenteId;
+            int maxAdvisees = 6;
+
+            var teachersQuery = _actors.Where(a => a.MainRoleId == actorTeacher && a.IsActived);
 
             if (groupId.HasValue)
             {
-                query = query.Where(a => a.ParentId == groupId.Value);
+                teachersQuery = teachersQuery.Where(a => a.ParentId == groupId.Value);
             }
 
-            return await query
-                .Select(a => new GetActorTeacherDto
-                {
-                    Id = a.Id,
-                    FirstName = a.FirstName,
-                    SecondName = a.SecondName,
-                })
+            var teachers = await teachersQuery.ToListAsync();
+
+            var contracts = await _context.AdvisoringContract
+                .Where(c => c.IsActived)
                 .ToListAsync();
+
+            var result = teachers.Select(teacher =>
+            {
+                var teacherContracts = contracts.Where(c => c.AdvisorId == teacher.Id);
+
+                var researchGroupName = teacherContracts
+                    .Where(c => c.ResearchGroupId != null)
+                    .Select(c =>
+                        _context.Actor
+                            .Where(rg => rg.Id == c.ResearchGroupId && rg.MainRoleId == 11)
+                            .Select(rg => rg.FirstName)
+                            .FirstOrDefault()
+                    )
+                    .FirstOrDefault();
+
+                var currentAdvisees = teacherContracts.Count();
+
+                return new GetActorTeacherDto
+                {
+                    Id = teacher.Id,
+                    Code = teacher.Code, // Cambia por el campo real de código si fuera diferente
+                    FullName = teacher.FirstName, // Cambia si tienes un campo de nombre completo
+                    ResearchGroup = researchGroupName ?? "Sin grupo",
+                    InstitutionalEmail = teacher.Email, // Cambia por el campo real de email
+                    CurrentAdvisees = currentAdvisees,
+                    Availability = currentAdvisees < maxAdvisees ? "Disponible" : "Lleno"
+                };
+            }).ToList();
+
+            return result;
         }
+
     }
 }

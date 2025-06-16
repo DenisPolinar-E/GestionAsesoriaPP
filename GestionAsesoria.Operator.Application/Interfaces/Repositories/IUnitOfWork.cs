@@ -23,7 +23,12 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         IProjectActorRepositoryAsync ProjectActorRepository { get; }
         IFundingRepositoryAsync FundingRepository { get; }
         IRequestPPPRepositoryAsync RequestPPPRepository { get; }
+        ICompanyPracticeRepositoryAsync CompanyPracticeRepository { get; }
+        ITeacherPracticeRepositoryAsync TeacherPracticeRepository { get; }
+
         IRoleRepositoryAsync RoleRepository { get; }
+        IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository { get; }
+
         IActorTypeRepositoryAsync ActorTypeRepository { get; }
         Task<int> Commit(CancellationToken cancellationToken);
         Task<int> CommitAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys);

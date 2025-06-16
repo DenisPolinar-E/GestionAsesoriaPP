@@ -9,7 +9,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 //     Author: TECH SOLUTIONS PERU EIRL
 //     Developer: Ronald Ibarra
-//     Generated at: 05/13/2025 16:27:28
+//     Generated at: 06/15/2025 17:20:56
 //     All Right reserved
 // </auto-generated>
 //------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ conn.Close();
 
 
 /// <summary>
-///  Role Docente
+///  Docente Investigador
 /// </summary>
 public sealed class LocalDocenteSettings
 {
@@ -221,11 +221,11 @@ conn.Close();
 
 
         /// <summary>
-        ///  Role Docente
+        ///  Docente
         /// </summary>
-        public int RoleDocenteId {
+        public int DocenteId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["RoleDocenteId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["DocenteId"]);
                
             }
         }
@@ -236,7 +236,7 @@ conn.Close();
 
 
 /// <summary>
-///  Lista de parametro en la Entidad Proyecto
+///  Proyecto de Investigación
 /// </summary>
 public sealed class LocalProjectSettings
 {
@@ -274,29 +274,11 @@ conn.Close();
 
 
         /// <summary>
-        ///  Métodos para un Proyecto
+        ///  Proyecto de Investigación
         /// </summary>
-        public int MethodProjectTypeId {
+        public int ProjectId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["MethodProjectTypeId"]);
-               
-            }
-        }
-        /// <summary>
-        ///  Objetivos de Desarrollo Sostenible
-        /// </summary>
-        public int ODSObjectiveId {
-            get {
-                                 return Convert.ToInt32(parametrosConfiguracion["ODSObjectiveId"]);
-               
-            }
-        }
-        /// <summary>
-        ///  Clasificación de Proyectos
-        /// </summary>
-        public int ClassificationProjectTypeId {
-            get {
-                                 return Convert.ToInt32(parametrosConfiguracion["ClassificationProjectTypeId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["ProjectId"]);
                
             }
         }
@@ -307,7 +289,7 @@ conn.Close();
 
 
 /// <summary>
-///  Lista de tipos de Documentos
+///  Tipo de Documento
 /// </summary>
 public sealed class LocalDocumentTypeSettings
 {
@@ -347,9 +329,9 @@ conn.Close();
         /// <summary>
         ///  Tipo de Documento
         /// </summary>
-        public int PlanDocumentId {
+        public int DocumentTypeId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["PlanDocumentId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["DocumentTypeId"]);
                
             }
         }
@@ -360,7 +342,7 @@ conn.Close();
 
 
 /// <summary>
-///  Lista de estados del proyecto
+///  Estado del Tipo de Proyecto
 /// </summary>
 public sealed class LocalStateProjectTypeSettings
 {
@@ -398,11 +380,11 @@ conn.Close();
 
 
         /// <summary>
-        ///  Estado de proyecto Registrado
+        ///  Estado del Tipo de Proyecto
         /// </summary>
-        public int RegisteredStateProjectId {
+        public int StateProjectTypeId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["RegisteredStateProjectId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["StateProjectTypeId"]);
                
             }
         }
@@ -413,7 +395,7 @@ conn.Close();
 
 
 /// <summary>
-///  Autores
+///  Actor del Proyecto
 /// </summary>
 public sealed class LocalActorProjectSettings
 {
@@ -451,11 +433,11 @@ conn.Close();
 
 
         /// <summary>
-        ///  Tipo de autor
+        ///  Actor del Proyecto
         /// </summary>
-        public int AuthorTypeId {
+        public int ActorProjectId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["AuthorTypeId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["ActorProjectId"]);
                
             }
         }
@@ -466,7 +448,7 @@ conn.Close();
 
 
 /// <summary>
-///  Financimiento
+///  Fondos
 /// </summary>
 public sealed class LocalFundingSettings
 {
@@ -504,14 +486,155 @@ conn.Close();
 
 
         /// <summary>
-        ///  Tipo de financimiento
+        ///  Fondos
         /// </summary>
-        public int FundingTypeId {
+        public int FundingId {
             get {
-                                 return Convert.ToInt32(parametrosConfiguracion["FundingTypeId"]);
+                                 return Convert.ToInt32(parametrosConfiguracion["FundingId"]);
                
             }
         }
+    
+
+}
+
+
+
+/// <summary>
+///  solicitudes de prácticas preprofesionales
+/// </summary>
+public sealed class LocalRequestPPPSettings
+{
+IDictionary<string, string> parametrosConfiguracion = new Dictionary<string, string>();
+
+
+
+
+public LocalRequestPPPSettings(string TenantConnectionString)
+        {
+SqlConnection conn = new SqlConnection(TenantConnectionString);
+//List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",10);
+SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
+conn.Open();
+        SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
+        bool parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        while(parametroConfiguracionLoop)
+        {
+
+            parametrosConfiguracion.Add(parametroConfiguracionReader["name"].ToString(),parametroConfiguracionReader["value"].ToString()); 
+            parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        }
+conn.Close();
+
+
+
+
+
+        }
+
+
+
+
+
+
+        /// <summary>
+        ///  Estado de RequestPPP
+        /// </summary>
+        public int StateRequestPPPId {
+            get {
+                                 return Convert.ToInt32(parametrosConfiguracion["StateRequestPPPId"]);
+               
+            }
+        }
+    
+
+}
+
+
+
+/// <summary>
+///  prácticas preprofesionales
+/// </summary>
+public sealed class LocalPreProfessionalInternshipSettings
+{
+IDictionary<string, string> parametrosConfiguracion = new Dictionary<string, string>();
+
+
+
+
+public LocalPreProfessionalInternshipSettings(string TenantConnectionString)
+        {
+SqlConnection conn = new SqlConnection(TenantConnectionString);
+//List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",11);
+SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
+conn.Open();
+        SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
+        bool parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        while(parametroConfiguracionLoop)
+        {
+
+            parametrosConfiguracion.Add(parametroConfiguracionReader["name"].ToString(),parametroConfiguracionReader["value"].ToString()); 
+            parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        }
+conn.Close();
+
+
+
+
+
+        }
+
+
+
+
+
+
+    
+
+}
+
+
+
+/// <summary>
+///  ofertas laborales relacionadas con empresas
+/// </summary>
+public sealed class LocalJobOfferSettings
+{
+IDictionary<string, string> parametrosConfiguracion = new Dictionary<string, string>();
+
+
+
+
+public LocalJobOfferSettings(string TenantConnectionString)
+        {
+SqlConnection conn = new SqlConnection(TenantConnectionString);
+//List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",12);
+SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
+conn.Open();
+        SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
+        bool parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        while(parametroConfiguracionLoop)
+        {
+
+            parametrosConfiguracion.Add(parametroConfiguracionReader["name"].ToString(),parametroConfiguracionReader["value"].ToString()); 
+            parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        }
+conn.Close();
+
+
+
+
+
+        }
+
+
+
+
+
+
     
 
 }
@@ -538,6 +661,12 @@ public partial class SettingsContainer
 
                    public  LocalFundingSettings LocalFundingSettings;
 
+                   public  LocalRequestPPPSettings LocalRequestPPPSettings;
+
+                   public  LocalPreProfessionalInternshipSettings LocalPreProfessionalInternshipSettings;
+
+                   public  LocalJobOfferSettings LocalJobOfferSettings;
+
                  
 
         public SettingsContainer(string tenantConnectionString)
@@ -559,6 +688,12 @@ public partial class SettingsContainer
                    LocalActorProjectSettings = new  LocalActorProjectSettings(tenantConnectionString);
 
                    LocalFundingSettings = new  LocalFundingSettings(tenantConnectionString);
+
+                   LocalRequestPPPSettings = new  LocalRequestPPPSettings(tenantConnectionString);
+
+                   LocalPreProfessionalInternshipSettings = new  LocalPreProfessionalInternshipSettings(tenantConnectionString);
+
+                   LocalJobOfferSettings = new  LocalJobOfferSettings(tenantConnectionString);
 
      
         SetDictionaries();

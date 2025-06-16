@@ -12,9 +12,12 @@ namespace GestionAsesoria.Operator.Domain.Entities
             PreProfessionalInternshipContracts = new HashSet<PreProfessionalInternshipByAdvisoringContract>();
         }
 
+        [Comment("ID de la solicitud de Prácticas Pre Profesionales asociada.")]
         public int RequestPPPId { get; set; }
 
-        public virtual RequestPPP Request { get; set; } = null!;
+        [Comment("Solicitud de Prácticas Pre Profesionales asociada.")]
+        public virtual RequestPPP RequestPPP { get; set; }
+
 
         [Comment("Colección de contratos de Prácticas Pre Profesionales asociadas.")]
         public virtual ICollection<PreProfessionalInternshipByAdvisoringContract> PreProfessionalInternshipContracts { get; set; }

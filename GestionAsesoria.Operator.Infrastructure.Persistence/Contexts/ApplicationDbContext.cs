@@ -159,9 +159,12 @@ public class ApplicationDbContext : AuditableContext
                 .HasComment("Observaciones generales sobre la solicitud.");
 
             entity.Property(r => r.StartDate)
-                .HasComment("Fecha prevista de inicio de prácticas.");
+                .HasComment("Fecha en la que se hizo la solicitud.");
 
-            entity.Property(r => r.EndDate)
+            entity.Property(r => r.StartRequest)
+                .HasComment("Fecha prevista de inicio de prácticas.");
+    
+            entity.Property(r => r.EndRequest)
                 .HasComment("Fecha prevista de fin de prácticas.");
 
             // --------- RELACIONES FOREIGN KEY ---------
@@ -211,12 +214,13 @@ public class ApplicationDbContext : AuditableContext
 
         builder.Entity<PreProfessionalInternship>(entity =>
         {
-            entity.HasOne(p => p.Request)
+            entity.HasOne(p => p.RequestPPP)
                 .WithMany()
                 .HasForeignKey(p => p.RequestPPPId)
-                .OnDelete(DeleteBehavior.Restrict) // o .Cascade según lo que necesites
-                .HasConstraintName("PreProfessionalInternship_Request");
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
         });
+
 
 
         // Configuración de Identity
