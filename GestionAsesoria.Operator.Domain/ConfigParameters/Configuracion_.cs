@@ -9,7 +9,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 //     Author: TECH SOLUTIONS PERU EIRL
 //     Developer: Ronald Ibarra
-//     Generated at: 06/15/2025 17:20:56
+//     Generated at: 06/16/2025 09:06:15
 //     All Right reserved
 // </auto-generated>
 //------------------------------------------------------------------------------
@@ -501,7 +501,113 @@ conn.Close();
 
 
 /// <summary>
-///  solicitudes de prácticas preprofesionales
+///  Métodos para un Proyecto
+/// </summary>
+public sealed class LocalMethodProjectTypeSettings
+{
+IDictionary<string, string> parametrosConfiguracion = new Dictionary<string, string>();
+
+
+
+
+public LocalMethodProjectTypeSettings(string TenantConnectionString)
+        {
+SqlConnection conn = new SqlConnection(TenantConnectionString);
+//List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",10);
+SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
+conn.Open();
+        SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
+        bool parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        while(parametroConfiguracionLoop)
+        {
+
+            parametrosConfiguracion.Add(parametroConfiguracionReader["name"].ToString(),parametroConfiguracionReader["value"].ToString()); 
+            parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        }
+conn.Close();
+
+
+
+
+
+        }
+
+
+
+
+
+
+        /// <summary>
+        ///  Métodos para un Proyecto
+        /// </summary>
+        public int MethodProjectTypeId {
+            get {
+                                 return Convert.ToInt32(parametrosConfiguracion["MethodProjectTypeId"]);
+               
+            }
+        }
+    
+
+}
+
+
+
+/// <summary>
+///  Objetivos de Desarrollo Sostenible
+/// </summary>
+public sealed class LocalODSObjectiveSettings
+{
+IDictionary<string, string> parametrosConfiguracion = new Dictionary<string, string>();
+
+
+
+
+public LocalODSObjectiveSettings(string TenantConnectionString)
+        {
+SqlConnection conn = new SqlConnection(TenantConnectionString);
+//List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",11);
+SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
+conn.Open();
+        SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
+        bool parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        while(parametroConfiguracionLoop)
+        {
+
+            parametrosConfiguracion.Add(parametroConfiguracionReader["name"].ToString(),parametroConfiguracionReader["value"].ToString()); 
+            parametroConfiguracionLoop = parametroConfiguracionReader.Read();
+        }
+conn.Close();
+
+
+
+
+
+        }
+
+
+
+
+
+
+        /// <summary>
+        ///  Objetivos de Desarrollo Sostenible
+        /// </summary>
+        public int ODSObjectiveId {
+            get {
+                                 return Convert.ToInt32(parametrosConfiguracion["ODSObjectiveId"]);
+               
+            }
+        }
+    
+
+}
+
+
+
+/// <summary>
+///  Solicitudes de prácticas preprofesionales
 /// </summary>
 public sealed class LocalRequestPPPSettings
 {
@@ -514,7 +620,7 @@ public LocalRequestPPPSettings(string TenantConnectionString)
         {
 SqlConnection conn = new SqlConnection(TenantConnectionString);
 //List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
-string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",10);
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",12);
 SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
 conn.Open();
         SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
@@ -554,7 +660,7 @@ conn.Close();
 
 
 /// <summary>
-///  prácticas preprofesionales
+///  Prácticas preprofesionales
 /// </summary>
 public sealed class LocalPreProfessionalInternshipSettings
 {
@@ -567,7 +673,7 @@ public LocalPreProfessionalInternshipSettings(string TenantConnectionString)
         {
 SqlConnection conn = new SqlConnection(TenantConnectionString);
 //List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
-string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",11);
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",13);
 SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
 conn.Open();
         SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
@@ -598,7 +704,7 @@ conn.Close();
 
 
 /// <summary>
-///  ofertas laborales relacionadas con empresas
+///  Ofertas laborales relacionadas con empresas
 /// </summary>
 public sealed class LocalJobOfferSettings
 {
@@ -611,7 +717,7 @@ public LocalJobOfferSettings(string TenantConnectionString)
         {
 SqlConnection conn = new SqlConnection(TenantConnectionString);
 //List<object> parametrosConfiguracion = new List<object>().Select(t => new { Id = default(int), Nombre = default(string), Valor=default(string) , Tipo=default(string), Descripcion=default(string)}).ToList(); 
-string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",12);
+string configuracionQuery = string.Format("select {0}, {1},{2},{3},{4} from {5} where businessSettingId={6} order by {0}", "id", "name", "value","description","dataType","BusinessSettingParameter",14);
 SqlCommand parametroConfiguracionCommand = new SqlCommand(configuracionQuery, conn);
 conn.Open();
         SqlDataReader parametroConfiguracionReader = parametroConfiguracionCommand.ExecuteReader();
@@ -661,6 +767,10 @@ public partial class SettingsContainer
 
                    public  LocalFundingSettings LocalFundingSettings;
 
+                   public  LocalMethodProjectTypeSettings LocalMethodProjectTypeSettings;
+
+                   public  LocalODSObjectiveSettings LocalODSObjectiveSettings;
+
                    public  LocalRequestPPPSettings LocalRequestPPPSettings;
 
                    public  LocalPreProfessionalInternshipSettings LocalPreProfessionalInternshipSettings;
@@ -688,6 +798,10 @@ public partial class SettingsContainer
                    LocalActorProjectSettings = new  LocalActorProjectSettings(tenantConnectionString);
 
                    LocalFundingSettings = new  LocalFundingSettings(tenantConnectionString);
+
+                   LocalMethodProjectTypeSettings = new  LocalMethodProjectTypeSettings(tenantConnectionString);
+
+                   LocalODSObjectiveSettings = new  LocalODSObjectiveSettings(tenantConnectionString);
 
                    LocalRequestPPPSettings = new  LocalRequestPPPSettings(tenantConnectionString);
 

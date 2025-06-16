@@ -27,7 +27,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
         private readonly IUnitOfWork<int> _unitOfWork;
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _env;
-        private readonly SettingsContainer _settingsContainer;
+        // readonly SettingsContainer _settingsContainer;
 
         public CreateRequestPPPCommandHandler(
             IMapper mapper,
@@ -40,7 +40,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             _unitOfWork = unitOfWork;
             _mediator = mediator;
             _env = env;
-            _settingsContainer = LocalSettingContainer.Get();
+            //_settingsContainer = LocalSettingContainer.Get();
         }
 
         public async Task<Result<int>> Handle(CreateRequestPPPCommand command, CancellationToken cancellationToken)
@@ -133,8 +133,8 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             }
 
             // === Crear solicitud PPP ===
-            //var status = await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("REQ_PENDING");
-            var statePending = _settingsContainer.LocalRequestPPPSettings.StateRequestPPPId;
+            var status = await _unitOfWork.MasterDataValueRepository.GetByCodeAsync("REQ_PENDING");
+            //var statePending = _settingsContainer.LocalRequestPPPSettings.StateRequestPPPId;
 
 
             var requestPPP = _mapper.Map<RequestPPP>(dto);
@@ -143,7 +143,7 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands
             requestPPP.RepresentativeId = representativeId;
             requestPPP.DocumentCollectionId = documentId;
             requestPPP.CompanyRepresentativeId = companyRepresentativeId;
-            requestPPP.StatusId = statePending;
+            requestPPP.StatusId = status.Id;
             requestPPP.ResearchAreaId = dto.ResearchAreaId;
             requestPPP.StartDate = DateTime.UtcNow;
             
