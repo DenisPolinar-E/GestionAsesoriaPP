@@ -35,30 +35,34 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.App
                 return await Result<int>.FailAsync("La solicitud no tiene asesor asignado.");
 
             entity.StatusId = approvedStatus.Id;
-
-            await _unitOfWork.RequestPPPRepository.UpdateAsync(entity);
-
-            var internship = new PreProfessionalInternship
+            try
             {
-                RequestPPPId = entity.Id
-            };
+                // Todo tu flujo normal
+                await _unitOfWork.RequestPPPRepository.UpdateAsync(entity);
 
-            await _unitOfWork.RequestPPPRepository.AddInternshipAsync(internship);
-            await _unitOfWork.Commit(cancellationToken);
+                var PreprofessionalInternshipId = new PreProfessionalInternship
+                {
+                    RequestPPPId = entity.Id
+                };
+                await _unitOfWork.Repository<PreProfessionalInternship>().AddAsync(PreprofessionalInternshipId);
+                await _unitOfWork.Commit(cancellationToken);
 
-            return await Result<int>.SuccessAsync(internship.Id, "Solicitud aprobada y práctica registrada.");
-        }
-    }
-}
-namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.ApproveRequestPPP
-{
-    internal class ApproveRequestPPPCommand
-    {
-        public int RequestPPPId { get; set; }
+                var internshipContract = new PreProfessionalInternshipByAdvisoringContract
+                {
+                    PreProfessionalInternshipId = PreprofessionalInternshipId.Id,
+                    AdvisoringContractId = null, 
+                    IsActived = false
+                };
+                await _unitOfWork.Repository<PreProfessionalInternshipByAdvisoringContract>().AddAsync(internshipContract);
+                await _unitOfWork.Commit(cancellationToken);
 
-        public ApproveRequestPPPCommand(ApproveRequestPPPRequestDto dto)
-        {
-            RequestPPPId = dto.RequestPPPId;
+                return await Result<int>.SuccessAsync(PreprofessionalInternshipId.Id, "Solicitud aprobada.");
+            }
+            catch (Exception ex)
+            {
+                return await Result<int>.FailAsync($"Error: {ex.Message} || Inner: {ex.InnerException?.Message}");
+            }
+
         }
     }
 }

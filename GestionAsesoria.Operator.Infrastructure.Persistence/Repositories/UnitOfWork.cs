@@ -29,6 +29,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private Hashtable _repositories;
         private readonly IAppCache _cache;
 
+
         public UnitOfWork(ApplicationDbContext dbContext, ICurrentUserService currentUserService, IAppCache cache)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -67,6 +68,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         public IActorTypeRepositoryAsync ActorTypeRepository => _actorTypeRepository ?? new ActorTypeRepositoryAsync(_dbContext);
         public ICompanyPracticeRepositoryAsync CompanyPracticeRepository => _companyPracticeRepository ?? new CompanyPracticeRepository(_dbContext);
         public IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository => _preProfessionalInternshipRepository ?? new PreProfessionalInternshipRepositoryAsync(_dbContext);
+        public IPreProfessionalInternshipByAdvisoringContractRepositoryAsync PreProfessionalInternshipByAdvisoringContractRepository => _internshipContractRepository ?? new PreProfessionalInternshipByAdvisoringContractRepositoryAsync(_dbContext);
         public ITeacherPracticeRepositoryAsync TeacherPracticeRepository => _teacherPracticeRepository ?? new TeacherPracticeRepository(_dbContext);
 
 
@@ -84,7 +86,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private IRoleRepositoryAsync _roleRepository => null;
         private IActorTypeRepositoryAsync _actorTypeRepository => null!;
         private IPreProfessionalInternshipRepositoryAsync _preProfessionalInternshipRepository => null!;
-    
+        private IPreProfessionalInternshipByAdvisoringContractRepositoryAsync _internshipContractRepository => null!;
+
 
         public async Task<int> Commit(CancellationToken cancellationToken)
         {

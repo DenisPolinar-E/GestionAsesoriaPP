@@ -3,7 +3,6 @@ using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
 using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
-using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Assign;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Update;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries.GetRequestPPP;
@@ -13,6 +12,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
+using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
 
 namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 {
@@ -55,11 +57,13 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             var result = await _mediator.Send(new GetAllRequestPPPForListQuery());
             return Ok(result);
         }
-
-        [HttpPost("assign-adviser")]
-        public async Task<IActionResult> AssignAdviserAsync([FromBody] AssignAdviserToRequestPPPRequestDto dto)
+        [HttpGet("list-view/{id}")]
+        public async Task<IActionResult> GetListViewById(int id)
         {
-            var result = await _mediator.Send(new AssignAdviserToRequestPPPCommand { Model = dto });
+            var result = await _mediator.Send(new GetRequestPPPByIdQuery(id));
+            if (result == null)
+                return NotFound("Solicitud no encontrada.");
+
             return Ok(result);
         }
 
@@ -83,5 +87,6 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             return Ok(result);
 
         }
+
     }
 }

@@ -19,6 +19,8 @@ using GestionAsesoria.Operator.Infrastructure.Persistence.Services.ExternalReque
 using GestionAsesoria.Operator.Infrastructure.Services;
 using GestionAsesoria.Operator.Infrastructure.Services.Identity;
 using GestionAsesoria.Operator.Infrastructure.Shared.Services;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Infrastructure.Persistence.Repositories;
 using GestionAsesoria.Operator.Shared.Constants.Application;
 using GestionAsesoria.Operator.Shared.Constants.Localization;
 using GestionAsesoria.Operator.Shared.Constants.Permission;
@@ -284,6 +286,8 @@ namespace GestionAsesoria.Operator.WebApi.Extensions
             services.AddTransient<IAuditService, AuditService>();
             services.AddTransient<IGenerateExcel, GenerateExcel>();
             services.AddTransient<ISunatReniecService, SunatReniecService>();
+            services.AddTransient<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
+            services.AddTransient<IPreProfessionalInternshipByAdvisoringContractRepositoryAsync, PreProfessionalInternshipByAdvisoringContractRepositoryAsync>();
             return services;
         }
 
