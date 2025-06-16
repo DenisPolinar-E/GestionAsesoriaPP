@@ -67,8 +67,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         public IRoleRepositoryAsync RoleRepository => _roleRepository ?? new RoleRepositoryAsync(_dbContext);
         public IActorTypeRepositoryAsync ActorTypeRepository => _actorTypeRepository ?? new ActorTypeRepositoryAsync(_dbContext);
         public ICompanyPracticeRepositoryAsync CompanyPracticeRepository => _companyPracticeRepository ?? new CompanyPracticeRepository(_dbContext);
+        public IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository => _preProfessionalInternshipRepository ?? new PreProfessionalInternshipRepositoryAsync(_dbContext);
         public IPreProfessionalInternshipByAdvisoringContractRepositoryAsync PreProfessionalInternshipByAdvisoringContractRepository => _internshipContractRepository ?? new PreProfessionalInternshipByAdvisoringContractRepositoryAsync(_dbContext);
-
 
 
         private IMasterDataValueRepositoryAsync _masterDataValue => null!;
@@ -83,7 +83,9 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private ICompanyPracticeRepositoryAsync _companyPracticeRepository => null!;
         private IRoleRepositoryAsync _roleRepository => null;
         private IActorTypeRepositoryAsync _actorTypeRepository => null!;
+        private IPreProfessionalInternshipRepositoryAsync _preProfessionalInternshipRepository => null!;
         private IPreProfessionalInternshipByAdvisoringContractRepositoryAsync _internshipContractRepository => null!;
+
 
         public async Task<int> Commit(CancellationToken cancellationToken)
         {

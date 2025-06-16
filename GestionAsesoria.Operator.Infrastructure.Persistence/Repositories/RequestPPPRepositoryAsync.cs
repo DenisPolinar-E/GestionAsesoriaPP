@@ -26,12 +26,6 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
             _actor= dbContext.Set<Actor>();
             _context = dbContext;
         }
-
-        //public async Task<string> GetEstadoByIdAsync(int id)
-        //{
-        //    var estado = await _requestPPP.Where(x => x.Id == id).Select(x => x.Estado).FirstOrDefaultAsync();
-        //    return estado;
-        //}
         public async Task<List<ListRequestPPPDto>> GetAllForListAsync()
         {
             return await _requestPPP
@@ -75,6 +69,31 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         public async Task AddInternshipAsync(PreProfessionalInternship internship)
         {
             await _context.PreProfessionalInternship.AddAsync(internship);
+        }
+
+        public async Task<IEnumerable<StateRequestPPPByIdResponseDto>> GetStateRequestPPPByIdAsync(int id)
+        {
+            var estado = await _requestPPP
+                .Where(x => x.Id == id)
+                .Select(x => new StateRequestPPPByIdResponseDto
+                {
+                    State = x.Status.Value
+                })
+                .ToListAsync();
+            return estado;
+        }
+        public async Task<bool> UpdateStateRequestPPPByIdAsync(int id, int newStatusId)
+        {
+            var entity = await _requestPPP.FindAsync(id);
+            if (entity == null)
+                return false;
+
+            entity.StatusId = newStatusId;
+            // si necesitas cargar la navegación:
+            // entity.Status = await _context.MasterDataValue.FindAsync(newStatusId);
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
 

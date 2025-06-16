@@ -35,45 +35,34 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.App
                 return await Result<int>.FailAsync("La solicitud no tiene asesor asignado.");
 
             entity.StatusId = approvedStatus.Id;
-            await _unitOfWork.RequestPPPRepository.UpdateAsync(entity);
-
-            // Crear práctica
-            var internship = new PreProfessionalInternship
+            try
             {
-                RequestPPPId = entity.Id
-            };
-            await _unitOfWork.Repository<PreProfessionalInternship>().AddAsync(internship);
-            await _unitOfWork.Commit(cancellationToken);
+                // Todo tu flujo normal
+                await _unitOfWork.RequestPPPRepository.UpdateAsync(entity);
 
-            // Crear registro en tabla intermedia sin asesor aún
-            var internshipContract = new PreProfessionalInternshipByAdvisoringContract
-            {
-                PreProfessionalInternshipId = internship.Id,
-                AdvisoringContractId = 0,
-                IsActived = true
-            };
+                var PreprofessionalInternshipId = new PreProfessionalInternship
+                {
+                    RequestPPPId = entity.Id
+                };
+                await _unitOfWork.Repository<PreProfessionalInternship>().AddAsync(PreprofessionalInternshipId);
+                await _unitOfWork.Commit(cancellationToken);
 
+                var internshipContract = new PreProfessionalInternshipByAdvisoringContract
+                {
+                    PreProfessionalInternshipId = PreprofessionalInternshipId.Id,
+                    AdvisoringContractId = null, 
+                    IsActived = false
+                };
+                await _unitOfWork.Repository<PreProfessionalInternshipByAdvisoringContract>().AddAsync(internshipContract);
+                await _unitOfWork.Commit(cancellationToken);
 
-            await _unitOfWork.Repository<PreProfessionalInternshipByAdvisoringContract>()
-                .AddAsync(internshipContract);
-
-
-            await _unitOfWork.Commit(cancellationToken);
-
-            return await Result<int>.SuccessAsync(internship.Id, "Solicitud aprobada y práctica registrada.");
-        }
-    }
-
-    namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.ApproveRequestPPP
-    {
-        internal class ApproveRequestPPPCommand
-        {
-            public int RequestPPPId { get; set; }
-
-            public ApproveRequestPPPCommand(ApproveRequestPPPRequestDto dto)
-            {
-                RequestPPPId = dto.RequestPPPId;
+                return await Result<int>.SuccessAsync(PreprofessionalInternshipId.Id, "Solicitud aprobada.");
             }
+            catch (Exception ex)
+            {
+                return await Result<int>.FailAsync($"Error: {ex.Message} || Inner: {ex.InnerException?.Message}");
+            }
+
         }
     }
 }

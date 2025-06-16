@@ -215,12 +215,13 @@ public class ApplicationDbContext : AuditableContext
 
         builder.Entity<PreProfessionalInternship>(entity =>
         {
-            entity.HasOne(p => p.Request)
+            entity.HasOne(p => p.RequestPPP)
                 .WithMany()
                 .HasForeignKey(p => p.RequestPPPId)
-                .OnDelete(DeleteBehavior.Restrict) // o .Cascade según lo que necesites
-                .HasConstraintName("PreProfessionalInternship_Request");
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
         });
+
 
 
         // Configuración de Identity
@@ -499,6 +500,23 @@ public class ApplicationDbContext : AuditableContext
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+
+        builder.Entity<PreProfessionalInternshipByAdvisoringContract>(entity =>
+        {
+            entity.HasOne(x => x.AdvisoringContract)
+                .WithMany()
+                .HasForeignKey(x => x.AdvisoringContractId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PPPContract_AdvisoringContract");
+
+            entity.HasOne(p => p.PreProfessionalInternship)
+                .WithMany()
+                .HasForeignKey(p => p.PreProfessionalInternshipId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PPPContract_Internship");
+        });
+
+
 
         // -----------------------------
         // Entidad: Advance

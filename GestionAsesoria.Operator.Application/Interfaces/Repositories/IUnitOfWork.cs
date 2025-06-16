@@ -25,6 +25,8 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         IRequestPPPRepositoryAsync RequestPPPRepository { get; }
         ICompanyPracticeRepositoryAsync CompanyPracticeRepository { get; }
         IRoleRepositoryAsync RoleRepository { get; }
+        IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository { get; }
+
         IActorTypeRepositoryAsync ActorTypeRepository { get; }
         IPreProfessionalInternshipByAdvisoringContractRepositoryAsync PreProfessionalInternshipByAdvisoringContractRepository { get; }
 
