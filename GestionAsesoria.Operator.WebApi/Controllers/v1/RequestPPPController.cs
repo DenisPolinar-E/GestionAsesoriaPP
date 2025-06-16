@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GestionAsesoria.Operator.Application.DTOs.RequestPPP.Request;
 using GestionAsesoria.Operator.Application.Features.RequestPPPs.Commands.Approve;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
 
 namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 {
@@ -56,6 +57,15 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             var result = await _mediator.Send(new GetAllRequestPPPForListQuery());
             return Ok(result);
         }
+        [HttpGet("list-view/{id}")]
+        public async Task<IActionResult> GetListViewById(int id)
+        {
+            var result = await _mediator.Send(new GetRequestPPPByIdQuery(id));
+            if (result == null)
+                return NotFound("Solicitud no encontrada.");
+
+            return Ok(result);
+        }
 
         [HttpPost("approve")]
         public async Task<IActionResult> ApproveAsync([FromBody] ApproveRequestPPPRequestDto dto)
@@ -77,5 +87,6 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
             return Ok(result);
 
         }
+
     }
 }

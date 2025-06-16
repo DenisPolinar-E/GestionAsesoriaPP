@@ -26,5 +26,12 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         {
             _context.PreProfessionalInternshipByAdvisoringContract.Update(entity);
         }
+
+        public async Task<bool> ExistsAssignmentAsync(int preProfessionalInternshipId)
+        {
+            return await _context.PreProfessionalInternshipByAdvisoringContract
+                .AnyAsync(x => x.PreProfessionalInternshipId == preProfessionalInternshipId && x.IsActived);
+        }
+
     }
 }

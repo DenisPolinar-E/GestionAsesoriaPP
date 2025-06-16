@@ -33,7 +33,7 @@ namespace GestionAsesoria.Operator.Application.Features.PreProfInternshipByContr
             if (internship.AdvisoringContractId != 0)
                 return await Result<int>.FailAsync("Esta práctica ya tiene un asesor asignado.");
 
-            internship.AdvisoringContractId = request.Model.AdviserId;
+            internship.AdvisoringContractId = request.Model.AdvisoringContractId;
 
             await _unitOfWork.PreProfessionalInternshipByAdvisoringContractRepository.UpdateAsync(internship);
             await _unitOfWork.Commit(cancellationToken);

@@ -9,6 +9,6 @@ namespace GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternshipByA
     public class AssignAdviserToInternshipRequestDto
     {
         public int PreProfessionalInternshipId { get; set; }
-        public int AdviserId { get; set; }
+        public int AdvisoringContractId { get; set; }
     }
 }
