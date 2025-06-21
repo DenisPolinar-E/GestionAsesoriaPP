@@ -40,7 +40,7 @@ try
 
     builder.Services.AddTransient<IEmailService, EmailService>();
 
-    // Ruta al archivo de configuración JSON
+    // Ruta al archivo de configuraci n JSON
     string configFilePath = Path.Combine(Directory.GetCurrentDirectory(), "config.json");
 
     // Servicio MessageService con archivo JSON
@@ -56,7 +56,7 @@ try
         );
     });
 
-    // Configuración de Google Authentication
+    // Configuraci n de Google Authentication
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
@@ -71,7 +71,7 @@ try
         options.CallbackPath = "/signin-google";
     });
 
-    ////Configuración de Google Calendar
+    ////Configuraci n de Google Calendar
     builder.Services.Configure<GoogleCalendarOptions>
     (builder.Configuration.GetSection("GoogleCalendarOptions"));
     //builder.Services.AddScoped<IGoogleCalendarService, GoogleCalendarService>();
@@ -92,7 +92,6 @@ try
     builder.Services.AddSignalR();
     builder.Services.AddApplicationLayer();
 
-
     builder.Services.AddApplicationServices();
     builder.Services.AddRepositories();
     builder.Services.AddSharedInfrastructure(_configuration);
@@ -105,7 +104,7 @@ try
     builder.Services.AddRazorPages();
 
     builder.Services.AddScoped<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
-
+    builder.Services.AddScoped<IFollowRepositoryAsync, FollowRepositoryAsync>();
 
     builder.Services.AddApiVersioning(config =>
     {
@@ -139,7 +138,7 @@ try
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "ERP Academico API v1");
             options.RoutePrefix = "swagger";
-            options.DocumentTitle = "Documentación de la API";
+            options.DocumentTitle = "Documentaci n de la API";
         });
     }
 
