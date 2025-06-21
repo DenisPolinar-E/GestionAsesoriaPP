@@ -92,6 +92,7 @@ public class ApplicationDbContext : AuditableContext
     public virtual DbSet<PreProfessionalInternship> PreProfessionalInternship { get; set; } = null!;
     public virtual DbSet<PreProfessionalInternshipByAdvisoringContract> PreProfessionalInternshipByAdvisoringContract { get; set; } = null!;
 
+
     public virtual DbSet<Role> Role { get; set; } = null!;
     public virtual DbSet<RoleByActorType> RoleByActorType { get; set; } = null!;
 
@@ -499,6 +500,23 @@ public class ApplicationDbContext : AuditableContext
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+
+        builder.Entity<PreProfessionalInternshipByAdvisoringContract>(entity =>
+        {
+            entity.HasOne(x => x.AdvisoringContract)
+                .WithMany()
+                .HasForeignKey(x => x.AdvisoringContractId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PPPContract_AdvisoringContract");
+
+            entity.HasOne(p => p.PreProfessionalInternship)
+                .WithMany()
+                .HasForeignKey(p => p.PreProfessionalInternshipId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PPPContract_Internship");
+        });
+
+
 
         // -----------------------------
         // Entidad: Advance

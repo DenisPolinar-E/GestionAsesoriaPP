@@ -92,6 +92,7 @@ try
     builder.Services.AddSignalR();
     builder.Services.AddApplicationLayer();
 
+
     builder.Services.AddApplicationServices();
     builder.Services.AddRepositories();
     builder.Services.AddSharedInfrastructure(_configuration);

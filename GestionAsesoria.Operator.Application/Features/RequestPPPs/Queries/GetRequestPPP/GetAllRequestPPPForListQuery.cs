@@ -21,15 +21,8 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries
             public async Task<List<ListRequestPPPDto>> Handle(GetAllRequestPPPForListQuery request, CancellationToken cancellationToken)
             {
                 var result = await _unitOfWork.RequestPPPRepository.GetAllForListAsync();
-                //MANEJO DE EXCEPCIONES PARA SABER SI NO HAY SOLICITUDES REGISTRADAS
-                if (result == null || result.Count == 0)
-                {
-                    throw new KeyNotFoundException("No existen solicitudes de prácticas registradas.");
-                }
-
-                return result;
+                return result; // puede ser vacía, pero nunca null
             }
-
         }
     }
 }

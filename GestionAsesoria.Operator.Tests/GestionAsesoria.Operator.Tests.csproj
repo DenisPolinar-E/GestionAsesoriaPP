@@ -32,4 +32,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Actors\Queries\GetActorTeachers\" />
+    <Folder Include="Features\RequestPPPs\Commands\" />
+  </ItemGroup>
+
 </Project>
