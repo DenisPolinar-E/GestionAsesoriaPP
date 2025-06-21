@@ -1,38 +1,54 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GestionAsesoria.Operator.Application.DTOs.Follow.Request;
 using GestionAsesoria.Operator.Application.DTOs.Follow.Response;
+using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Request;
+using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Response;
 using GestionAsesoria.Operator.Application.Features.Follow.Queries;
-using GestionAsesoria.Operator.Shared.Wrapper;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionAsesoria.Operator.Api.Controllers.v1
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class FollowController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IFollowRepositoryAsync _repository; // Asumo que tienes esta interfaz
 
-        public FollowController(IMediator mediator)
+        public FollowController(IFollowRepositoryAsync repository)
         {
-            _mediator = mediator;
+            _repository = repository;
         }
-
         [HttpGet]
-        public async Task<ActionResult<Result<List<ListFollowDto>>>> GetAll()
+        public async Task<ActionResult<List<ListFollowDto>>> GetAllFollowsAsync()
         {
-            var result = await _mediator.Send(new GetAllFollowsQuery());
-            return Ok(result);
+            try
+            {
+                var result = await _repository.GetAllFollowsAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
 
-        [HttpPost("filter")]
-        public async Task<ActionResult<Result<List<ListFollowDto>>>> GetFiltered([FromBody] FollowFilterDto filters)
+        [HttpPost("filtered")]
+        public async Task<ActionResult<List<ListFollowDto>>> GetFilteredAsync(FollowFilterDto filters)
         {
-            var query = new GetFilteredFollowsQuery(filters);
-            var result = await _mediator.Send(query);
-            return Ok(result);
+            try
+            {
+                var result = await _repository.GetFilteredAsync(filters);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
     }
 }
+

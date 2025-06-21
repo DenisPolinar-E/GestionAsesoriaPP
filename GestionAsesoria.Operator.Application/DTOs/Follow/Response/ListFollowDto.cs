@@ -10,13 +10,11 @@ namespace GestionAsesoria.Operator.Application.DTOs.Follow.Response
     {
         public string StudentName { get; set; } = null!;
         public string Status { get; set; } = null!;
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-
+        public DateTime? StartRequest { get; set; }
+        public DateTime? EndRequest { get; set; }
         public int DurationDays {  get; set; }
         public int DaysRemaining { get; set; }
+        public int DaysElapsed { get; set; }
         public double ProgressPercentage { get; set; }
-
-
     }
 }
