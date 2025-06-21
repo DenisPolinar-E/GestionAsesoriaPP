@@ -13,9 +13,9 @@ namespace GestionAsesoria.Operator.Application.Mappings.RequestPPPRequestPPPMaps
                 .ForMember(dest => dest.Functions, opt => opt.MapFrom(src => src.Functions))
                 .ForMember(dest => dest.Modality, opt => opt.MapFrom(src => src.Modality))
                 .ForMember(dest => dest.AssignedArea, opt => opt.MapFrom(src => src.AssignedArea))
-                .ForMember(dest => dest.Observations, opt => opt.MapFrom(src => src.Observations))
                 .ForMember(dest => dest.ResearchAreaId, opt => opt.MapFrom(src => src.ResearchAreaId))
 
+                .ForMember(dest => dest.Observations, opt => opt.Ignore()) // Este campo se puede ignorar si no se envía en el DTO
                 // Estas claves foráneas se asignan directamente en el comando
                 .ForMember(dest => dest.StudentId, opt => opt.Ignore())
                 .ForMember(dest => dest.CompanyId, opt => opt.Ignore())

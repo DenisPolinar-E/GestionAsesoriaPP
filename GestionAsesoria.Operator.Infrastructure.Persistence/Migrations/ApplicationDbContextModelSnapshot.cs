@@ -1149,7 +1149,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("RequestPPPId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("ID de la solicitud de Prácticas Pre Profesionales asociada.");
 
                     b.HasKey("Id");
 
@@ -1169,16 +1170,19 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdvisoringContractId")
+                    b.Property<int?>("AdvisoringContractId")
                         .HasColumnType("int")
+                        .HasColumnName("AdvisoringContractId")
                         .HasComment("Identificador del contrato de asesoría asociado.");
 
                     b.Property<bool>("IsActived")
                         .HasColumnType("bit")
+                        .HasColumnName("IsActived")
                         .HasComment("Este atributo nos permite verificar si el usuario cuenta con un contrato de PPP activo");
 
                     b.Property<int>("PreProfessionalInternshipId")
                         .HasColumnType("int")
+                        .HasColumnName("PreProfessionalInternshipId")
                         .HasComment("Identificador de la Práctica Pre Profesional asociada.");
 
                     b.HasKey("Id");
@@ -1187,7 +1191,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PreProfessionalInternshipId");
 
-                    b.ToTable("PreProfessionalInternshipByAdvisoringContract", t =>
+                    b.ToTable("PreProfessionalInternshipByAdvisoringContract", null, t =>
                         {
                             t.HasComment("Es una tabla intermedia el cual representa un contrato de Práctica Pre Profesional, incluyendo referencias a la Práctica Pre Profesional y al contrato de asesoría asociados.");
                         });
@@ -2322,28 +2326,27 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", b =>
                 {
-                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.RequestPPP", "Request")
+                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.RequestPPP", "RequestPPP")
                         .WithMany()
                         .HasForeignKey("RequestPPPId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("PreProfessionalInternship_Request");
+                        .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
 
-                    b.Navigation("Request");
+                    b.Navigation("RequestPPP");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternshipByAdvisoringContract", b =>
                 {
                     b.HasOne("GestionAsesoria.Operator.Domain.Entities.AdvisoringContract", "AdvisoringContract")
-                        .WithMany("PreProfessionalInternshipContracts")
+                        .WithMany()
                         .HasForeignKey("AdvisoringContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", "PreProfessionalInternship")
-                        .WithMany("PreProfessionalInternshipContracts")
+                        .WithMany()
                         .HasForeignKey("PreProfessionalInternshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AdvisoringContract");

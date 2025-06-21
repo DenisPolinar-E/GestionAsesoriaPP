@@ -1,4 +1,4 @@
-﻿using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Application.Interfaces.Repositories;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories.Identity;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories.Projects;
 using GestionAsesoria.Operator.Application.Interfaces.Services;
@@ -28,6 +28,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private bool disposed;
         private Hashtable _repositories;
         private readonly IAppCache _cache;
+
 
         public UnitOfWork(ApplicationDbContext dbContext, ICurrentUserService currentUserService, IAppCache cache)
         {
@@ -63,10 +64,14 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         public IProjectActorRepositoryAsync ProjectActorRepository => _projectActorRepository ?? new ProjectActorRepositoryAsync(_dbContext);
         public IFundingRepositoryAsync FundingRepository => _fundingRepository ?? new FundingRepositoryAsync(_dbContext);
         public IRequestPPPRepositoryAsync RequestPPPRepository => _requestPPPRepository ?? new RequestPPPRepositoryAsync(_dbContext);
+
+        //follow
+        public IFollowRepositoryAsync FollowRepository => _followRepository ?? new FollowRepositoryAsync(_dbContext);
         public IRoleRepositoryAsync RoleRepository => _roleRepository ?? new RoleRepositoryAsync(_dbContext);
         public IActorTypeRepositoryAsync ActorTypeRepository => _actorTypeRepository ?? new ActorTypeRepositoryAsync(_dbContext);
         public ICompanyPracticeRepositoryAsync CompanyPracticeRepository => _companyPracticeRepository ?? new CompanyPracticeRepository(_dbContext);
         public IPreProfessionalInternshipRepositoryAsync PreProfessionalInternshipRepository => _preProfessionalInternshipRepository ?? new PreProfessionalInternshipRepositoryAsync(_dbContext);
+        public IPreProfessionalInternshipByAdvisoringContractRepositoryAsync PreProfessionalInternshipByAdvisoringContractRepository => _internshipContractRepository ?? new PreProfessionalInternshipByAdvisoringContractRepositoryAsync(_dbContext);
         public ITeacherPracticeRepositoryAsync TeacherPracticeRepository => _teacherPracticeRepository ?? new TeacherPracticeRepository(_dbContext);
 
 
@@ -79,12 +84,14 @@ namespace GestionAsesoria.Operator.Infrastructure.Repositories
         private IProjectActorRepositoryAsync _projectActorRepository => null!;
         private IFundingRepositoryAsync _fundingRepository => null!;
         private IRequestPPPRepositoryAsync _requestPPPRepository => null!;
+        private IFollowRepositoryAsync _followRepository => null!;
         private ICompanyPracticeRepositoryAsync _companyPracticeRepository => null!;
         private ITeacherPracticeRepositoryAsync _teacherPracticeRepository => null!;
         private IRoleRepositoryAsync _roleRepository => null;
         private IActorTypeRepositoryAsync _actorTypeRepository => null!;
         private IPreProfessionalInternshipRepositoryAsync _preProfessionalInternshipRepository => null!;
-    
+        private IPreProfessionalInternshipByAdvisoringContractRepositoryAsync _internshipContractRepository => null!;
+
 
         public async Task<int> Commit(CancellationToken cancellationToken)
         {

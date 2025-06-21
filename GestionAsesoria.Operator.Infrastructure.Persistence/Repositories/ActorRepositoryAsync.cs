@@ -306,7 +306,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
 
         public async Task<List<GetActorTeacherDto>> GetTeachersAsync(int? groupId)
         {
-            var actorTeacher = _settingsContainer.LocalDocenteSettings.RoleDocenteId;
+            var actorTeacher = _settingsContainer.LocalDocenteSettings.DocenteId;
             int maxAdvisees = 6;
 
             var teachersQuery = _actors.Where(a => a.MainRoleId == actorTeacher && a.IsActived);

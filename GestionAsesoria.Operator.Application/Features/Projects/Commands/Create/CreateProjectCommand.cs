@@ -63,7 +63,7 @@ namespace GestionAsesoria.Operator.Application.Features.Projects.Commands.Create
                 var createDocumentCollectionCommand = new CreateDocumentCollectionCommand
                 {
                     Request = documentCollectionRequest,
-                    DocumentTypeId = _settingsContainer.LocalDocumentTypeSettings.PlanDocumentId,
+                    DocumentTypeId = _settingsContainer.LocalDocumentTypeSettings.DocumentTypeId,
                     UploadedByActorId = command.Request.AuthorProjectId
                 };
 
@@ -83,7 +83,7 @@ namespace GestionAsesoria.Operator.Application.Features.Projects.Commands.Create
                 project.PlanDocumentCollectionId = planDocumentCollectionId;
                 
                 // Establecer el estado inicial del proyecto
-                project.StateProjectId = _settingsContainer.LocalStateProjectTypeSettings.RegisteredStateProjectId;
+                project.StateProjectId = _settingsContainer.LocalStateProjectTypeSettings.StateProjectTypeId;
                 
                 // Persistir el proyecto
                 await _unitOfWork.ProjectRepository.AddAsync(project);
