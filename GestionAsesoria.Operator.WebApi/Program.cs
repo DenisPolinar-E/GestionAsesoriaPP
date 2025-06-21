@@ -92,6 +92,7 @@ try
     builder.Services.AddSignalR();
     builder.Services.AddApplicationLayer();
 
+
     builder.Services.AddApplicationServices();
     builder.Services.AddRepositories();
     builder.Services.AddSharedInfrastructure(_configuration);
@@ -102,6 +103,8 @@ try
     builder.Services.AddLogging();
     builder.Services.AddControllers().AddValidators();
     builder.Services.AddRazorPages();
+
+    builder.Services.AddScoped<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
 
 
     builder.Services.AddApiVersioning(config =>
