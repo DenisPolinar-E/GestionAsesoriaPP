@@ -1,5 +1,7 @@
 ﻿// Ya definido por ti (solo se refactoriza si es necesario)
 using Microsoft.AspNetCore.Http;
+using NodaTime;
+using System;
 
 public class CreateRequestPPPRequestDto
 {
@@ -40,6 +42,8 @@ public class CreateRequestPPPRequestDto
     public string? Functions { get; set; }
     public string? Modality { get; set; }
     public string? AssignedArea { get; set; }
+    public DateTime? StartPreProfessionalPractice { get; set; }
+    public DateTime? EndPreProfessionalPractice { get; set; }
 
     public int ResearchAreaId { get; set; }
 

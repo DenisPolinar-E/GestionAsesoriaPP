@@ -10,8 +10,8 @@ namespace GestionAsesoria.Operator.Application.DTOs.Follow.Response
     {
         public string StudentName { get; set; } = null!;
         public string Status { get; set; } = null!;
-        public DateTime? StartRequest { get; set; }
-        public DateTime? EndRequest { get; set; }
+        public DateTime? StartPreProfessionalPractice { get; set; }
+        public DateTime? EndPreProfessionalPractice { get; set; }
         public int DurationDays {  get; set; }
         public int DaysRemaining { get; set; }
         public int DaysElapsed { get; set; }

@@ -30,20 +30,20 @@ public class FollowRepositoryAsync : GenericRepositoryAsync<PreProfessionalInter
             .Select(f => new ListFollowDto
             {
                 StudentName = f.RequestPPP.Student.FirstName + " " + f.RequestPPP.Student.SecondName,
-                StartRequest = f.RequestPPP.StartRequest,
-                EndRequest = f.RequestPPP.EndRequest,
+                StartPreProfessionalPractice = f.RequestPPP.StartPreProfessionalPractice,
+                EndPreProfessionalPractice = f.RequestPPP.EndPreProfessionalPractice,
                 Status = f.RequestPPP.Status.Value,
 
-                DurationDays = f.RequestPPP.EndRequest.HasValue && f.RequestPPP.StartRequest.HasValue
-                    ? (f.RequestPPP.EndRequest.Value - f.RequestPPP.StartRequest.Value).Days
+                DurationDays = f.RequestPPP.EndPreProfessionalPractice.HasValue && f.RequestPPP.StartPreProfessionalPractice.HasValue
+                    ? (f.RequestPPP.EndPreProfessionalPractice.Value - f.RequestPPP.StartPreProfessionalPractice.Value).Days
                     : 0,
 
-                DaysElapsed = f.RequestPPP.StartRequest.HasValue
-                    ? Math.Max((now - f.RequestPPP.StartRequest.Value).Days, 0)
+                DaysElapsed = f.RequestPPP.StartPreProfessionalPractice.HasValue
+                    ? Math.Max((now - f.RequestPPP.StartPreProfessionalPractice.Value).Days, 0)
                     : 0,
 
-                DaysRemaining = f.RequestPPP.EndRequest.HasValue
-                    ? Math.Max((f.RequestPPP.EndRequest.Value - now).Days, 0)
+                DaysRemaining = f.RequestPPP.EndPreProfessionalPractice.HasValue
+                    ? Math.Max((f.RequestPPP.EndPreProfessionalPractice.Value - now).Days, 0)
                     : 0
             });
     }
