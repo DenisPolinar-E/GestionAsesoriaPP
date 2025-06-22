@@ -9,8 +9,8 @@ namespace GestionAsesoria.Operator.Application.DTOs.RequestPPP.Response
         public string? Modality { get; set; }
         public string Status { get; set; } = null!;
         public DateTime? StartDate { get; set; }
-        //public DateTime? StartRequest { get; set; }
-        //public DateTime? EndRequest { get; set; }
+        public DateTime? StartPreProfessionalPractice { get; set; }
+        public DateTime? EndPreProfessionalPractice { get; set; }
 
         public string StudentName { get; set; } = null!;
         public string CompanyName { get; set; } = null!;

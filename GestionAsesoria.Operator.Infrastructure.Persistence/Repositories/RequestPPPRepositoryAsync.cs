@@ -44,8 +44,8 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                     Status = r.Status.Name,
 
                     StartDate = r.StartDate,
-                    /*StartRequest = r.StartRequest,
-                    EndRequest = r.EndRequest,*/
+                    StartPreProfessionalPractice = r.StartPreProfessionalPractice,
+                    EndPreProfessionalPractice = r.EndPreProfessionalPractice,
 
                     StudentName = r.Student.FirstName + r.Student.SecondName,
                     CompanyName = r.Company.FirstName,
