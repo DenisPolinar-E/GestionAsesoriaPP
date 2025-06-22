@@ -33,10 +33,10 @@ namespace GestionAsesoria.Operator.Domain.Entities
 
 
         [Comment("Fecha prevista de inicio de prácticas.")]
-        public DateTime? StartRequest { get; set; }
+        public DateTime? StartPreProfessionalPractice { get; set; }
 
         [Comment("Fecha prevista de fin de prácticas.")]
-        public DateTime? EndRequest { get; set; }
+        public DateTime? EndPreProfessionalPractice { get; set; }
 
         // ===================== CLAVES FORÁNEAS =====================
         [Comment("ID del estudiante solicitante.")]

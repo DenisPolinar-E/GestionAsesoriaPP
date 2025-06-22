@@ -162,10 +162,10 @@ public class ApplicationDbContext : AuditableContext
             entity.Property(r => r.StartDate)
                 .HasComment("Fecha en la que se hizo la solicitud.");
 
-            entity.Property(r => r.StartRequest)
+            entity.Property(r => r.StartPreProfessionalPractice)
                 .HasComment("Fecha prevista de inicio de prácticas.");
     
-            entity.Property(r => r.EndRequest)
+            entity.Property(r => r.EndPreProfessionalPractice)
                 .HasComment("Fecha prevista de fin de prácticas.");
 
             // --------- RELACIONES FOREIGN KEY ---------
@@ -220,6 +220,12 @@ public class ApplicationDbContext : AuditableContext
                 .HasForeignKey(p => p.RequestPPPId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
+
+            entity.HasOne(p => p.DocumentResolution)
+                .WithMany()
+                .HasForeignKey(p => p.ResolutionId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_DocumentResolution");
         });
 
 
@@ -507,6 +513,7 @@ public class ApplicationDbContext : AuditableContext
                 .WithMany(c => c.PreProfessionalInternshipContracts)
                 .HasForeignKey(x => x.AdvisoringContractId)
                 .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false)
                 .HasConstraintName("FK_PPPContract_AdvisoringContract");
 
             entity.HasOne(p => p.PreProfessionalInternship)

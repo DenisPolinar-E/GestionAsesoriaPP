@@ -18,6 +18,10 @@ namespace GestionAsesoria.Operator.Domain.Entities
         [Comment("Solicitud de Prácticas Pre Profesionales asociada.")]
         public virtual RequestPPP RequestPPP { get; set; }
 
+        public int ResolutionId { get; set; }
+
+        public virtual DocumentCollection DocumentResolution { get; set; }
+
 
         [Comment("Colección de contratos de Prácticas Pre Profesionales asociadas.")]
         public virtual ICollection<PreProfessionalInternshipByAdvisoringContract> PreProfessionalInternshipContracts { get; set; }
