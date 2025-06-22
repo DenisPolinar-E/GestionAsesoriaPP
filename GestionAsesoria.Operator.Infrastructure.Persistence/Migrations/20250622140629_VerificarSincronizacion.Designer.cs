@@ -4,6 +4,7 @@ using GestionAsesoria.Operator.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250622140629_VerificarSincronizacion")]
+    partial class VerificarSincronizacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +105,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Actor", null, t =>
+                    b.ToTable("Actor", t =>
                         {
                             t.HasComment("Representa a un actor en el sistema, el cual está involucrada en contratos de asesoría.");
                         });
@@ -138,7 +141,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                     b.HasIndex("ActorId", "RoleId")
                         .IsUnique();
 
-                    b.ToTable("ActorSecondaryRole", (string)null);
+                    b.ToTable("ActorSecondaryRole");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ActorType", b =>
@@ -163,7 +166,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActorType", (string)null);
+                    b.ToTable("ActorType");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.AdvisingSession", b =>
@@ -190,7 +193,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("AppointmentId");
 
-                    b.ToTable("AdvisingSession", null, t =>
+                    b.ToTable("AdvisingSession", t =>
                         {
                             t.HasComment("Representa una sesión de asesoría, que incluye tareas y notas relacionadas con una cita específica.");
                         });
@@ -285,7 +288,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("AdvisoringContract", null, t =>
+                    b.ToTable("AdvisoringContract", t =>
                         {
                             t.HasComment("Contrato de Asesoria, en el cual se asume responsabilidades entre el asesor y asesorado por un tiempo limitado");
                         });
@@ -360,7 +363,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserActorId");
 
-                    b.ToTable("AdvisoringRequest", null, t =>
+                    b.ToTable("AdvisoringRequest", t =>
                         {
                             t.HasComment("Representa una solicitud de asesoría, incluyendo detalles sobre el mensaje del usuario, la respuesta del asesor y el estado de la solicitud.");
                         });
@@ -401,7 +404,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("AdvisingSessionId");
 
-                    b.ToTable("AdvisoringTask", null, t =>
+                    b.ToTable("AdvisoringTask", t =>
                         {
                             t.HasComment("Representa una tarea de asesoría, que incluye detalles sobre la tarea asignada, explicaciones del Asesor y respuestas del estudiante.");
                         });
@@ -473,7 +476,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentActorId");
 
-                    b.ToTable("Appointment", null, t =>
+                    b.ToTable("Appointment", t =>
                         {
                             t.HasComment("Permite crear una cita, incluyendo detalles sobre la fecha, ubicación y estado actual.");
                         });
@@ -505,7 +508,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppointmentStatus", null, t =>
+                    b.ToTable("AppointmentStatus", t =>
                         {
                             t.HasComment("Representa los estados de una cita, el cual incluye el nombre del estado, la fecha y comentarios adicionales.");
                         });
@@ -548,7 +551,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditTrails", (string)null);
+                    b.ToTable("AuditTrails");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.Calendar", b =>
@@ -599,7 +602,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("Calendar", null, t =>
+                    b.ToTable("Calendar", t =>
                         {
                             t.HasComment("Representa el calendario que se integrará de Google, el cual incluye detalles sobre tokens de acceso, tipo de eventos y URL de programación.");
                         });
@@ -624,7 +627,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("AppointmentStatusId");
 
-                    b.ToTable("CurrentAppointmentStatus", null, t =>
+                    b.ToTable("CurrentAppointmentStatus", t =>
                         {
                             t.HasComment("Representa el estado actual de una cita.");
                         });
@@ -674,7 +677,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UploadedByActorId");
 
-                    b.ToTable("DocumentCollection", (string)null);
+                    b.ToTable("DocumentCollection");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.DocumentVersion", b =>
@@ -701,7 +704,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DocumentCollectionId");
 
-                    b.ToTable("DocumentVersion", (string)null);
+                    b.ToTable("DocumentVersion");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.Identity.AcademicRole", b =>
@@ -945,7 +948,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MasterData", null, t =>
+                    b.ToTable("MasterData", t =>
                         {
                             t.HasComment("Representa los datos maestros utilizados en el sistema, como códigos y tipos de datos relacionados.");
                         });
@@ -995,7 +998,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("MasterDataId");
 
-                    b.ToTable("MasterDataValue", null, t =>
+                    b.ToTable("MasterDataValue", t =>
                         {
                             t.HasComment("Representa los valores asociados a los datos maestros en el sistema. Cada valor tiene un código, nombre y una descripción.");
                         });
@@ -1037,7 +1040,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("OrganizationActorId");
 
-                    b.ToTable("Membership", null, t =>
+                    b.ToTable("Membership", t =>
                         {
                             t.HasComment("Representa un miembro de un grupo de investigación, incluyendo detalles sobre su rol y las tesis asociadas.");
                         });
@@ -1053,7 +1056,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mentoring", null, t =>
+                    b.ToTable("Mentoring", t =>
                         {
                             t.HasComment("Representa una Tutoría, incluyendo los contratos de tutoría asociadas.");
                         });
@@ -1085,7 +1088,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("MentoringId");
 
-                    b.ToTable("MentoringByAdvisoringContract", null, t =>
+                    b.ToTable("MentoringByAdvisoringContract", t =>
                         {
                             t.HasComment("Es una tabla intermedia el cual representa un contrato de Tutoría, incluyendo referencias a la tutoría y al contrato de asesoría asociados.");
                         });
@@ -1107,7 +1110,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BusinessSetting", (string)null);
+                    b.ToTable("BusinessSetting");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.Parameters.BusinessSettingParameter", b =>
@@ -1137,7 +1140,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("BusinessSettingId");
 
-                    b.ToTable("BusinessSettingParameter", (string)null);
+                    b.ToTable("BusinessSettingParameter");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", b =>
@@ -1156,7 +1159,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("RequestPPPId");
 
-                    b.ToTable("PreProfessionalInternship", null, t =>
+                    b.ToTable("PreProfessionalInternship", t =>
                         {
                             t.HasComment("Representa una Práctica Pre Profesional, incluyendo los contratos de Prácticas Pre Profesionales asociadas.");
                         });
@@ -1188,7 +1191,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PreProfessionalInternshipId");
 
-                    b.ToTable("PreProfessionalInternshipByAdvisoringContract", null, t =>
+                    b.ToTable("PreProfessionalInternshipByAdvisoringContract", t =>
                         {
                             t.HasComment("Es una tabla intermedia el cual representa un contrato de Práctica Pre Profesional, incluyendo referencias a la Práctica Pre Profesional y al contrato de asesoría asociados.");
                         });
@@ -1230,7 +1233,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ReportOfResearchGroupDocumentCollectionId");
 
-                    b.ToTable("Advance", (string)null);
+                    b.ToTable("Advance");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.AdvanceEvaluation", b =>
@@ -1275,7 +1278,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StatusEvaluationId");
 
-                    b.ToTable("AdvanceEvaluation", (string)null);
+                    b.ToTable("AdvanceEvaluation");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.Funding", b =>
@@ -1314,7 +1317,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Funding", (string)null);
+                    b.ToTable("Funding");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.Project", b =>
@@ -1425,7 +1428,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StateProjectId");
 
-                    b.ToTable("Project", (string)null);
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.ProjectActor", b =>
@@ -1460,7 +1463,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProjectActor", (string)null);
+                    b.ToTable("ProjectActor");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.ProjectEvaluation", b =>
@@ -1505,7 +1508,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StatusEvaluationId");
 
-                    b.ToTable("ProjectEvaluation", (string)null);
+                    b.ToTable("ProjectEvaluation");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.ScientificProduction", b =>
@@ -1556,7 +1559,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ScientificProduction", (string)null);
+                    b.ToTable("ScientificProduction");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.ProjectIDI.ScientificProductionEvaluation", b =>
@@ -1601,7 +1604,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StatusEvaluationId");
 
-                    b.ToTable("ScientificProductionEvaluation", (string)null);
+                    b.ToTable("ScientificProductionEvaluation");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.RequestPPP", b =>
@@ -1723,7 +1726,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.RoleByActorType", b =>
@@ -1749,7 +1752,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleByActorType", (string)null);
+                    b.ToTable("RoleByActorType");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.Thesis", b =>
@@ -1790,7 +1793,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TesistaMembershipId");
 
-                    b.ToTable("Thesis", null, t =>
+                    b.ToTable("Thesis", t =>
                         {
                             t.HasComment("Representa una tesis, incluyendo detalles sobre el título, asesores y líneas de investigación asociadas.");
                         });
@@ -1822,7 +1825,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ThesisId");
 
-                    b.ToTable("ThesisByAdvisoringContract", null, t =>
+                    b.ToTable("ThesisByAdvisoringContract", t =>
                         {
                             t.HasComment("Representa un contrato de tesis, el cual representa una tabla intermedia donde incluye referencias a la tesis y al contrato de asesoría asociados.");
                         });
@@ -1857,7 +1860,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ThesisStatusId");
 
-                    b.ToTable("ThesisStatusHistory", null, t =>
+                    b.ToTable("ThesisStatusHistory", t =>
                         {
                             t.HasComment("Representa el historial de estado de una tesis, incluyendo detalles sobre el estado, fecha de emisión y archivo asociado.");
                         });
