@@ -510,13 +510,14 @@ public class ApplicationDbContext : AuditableContext
         builder.Entity<PreProfessionalInternshipByAdvisoringContract>(entity =>
         {
             entity.HasOne(x => x.AdvisoringContract)
-                .WithMany()
+                .WithMany(c => c.PreProfessionalInternshipContracts)
                 .HasForeignKey(x => x.AdvisoringContractId)
                 .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false)
                 .HasConstraintName("FK_PPPContract_AdvisoringContract");
 
             entity.HasOne(p => p.PreProfessionalInternship)
-                .WithMany()
+                .WithMany(p => p.PreProfessionalInternshipContracts)
                 .HasForeignKey(p => p.PreProfessionalInternshipId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_PPPContract_Internship");

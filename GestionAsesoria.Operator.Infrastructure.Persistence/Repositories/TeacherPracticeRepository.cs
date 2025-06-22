@@ -21,44 +21,36 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         {
             int maxAdvisees = 5;
 
-            var teachers = await _dbContext.Actor
-                .Where(a => a.MainRoleId == 15 && a.IsActived)
-                .ToListAsync();
-
-            var contracts = await _dbContext.AdvisoringContract
-                .Where(c => c.IsActived)
-                .ToListAsync();
-
-            var result = teachers.Select(teacher =>
-            {
-                var teacherContracts = contracts.Where(c => c.AdvisorId == teacher.Id);
-
-                var researchGroupName = teacherContracts
-                    .Where(c => c.ResearchGroupId != null)
-                    .Select(c =>
-                        _dbContext.Actor
-                            .Where(rg => rg.Id == c.ResearchGroupId && rg.MainRoleId == 11)
-                            .Select(rg => rg.FirstName)
-                            .FirstOrDefault()
-                    )
-                    .FirstOrDefault();
-
-                var currentAdvisees = teacherContracts.Count();
-
-                return new GetActorTeacherDto
+            var result = await (
+                from teacher in _dbContext.Actor
+                where teacher.MainRoleId == 15 && teacher.IsActived
+                join parent in _dbContext.Actor
+                    on teacher.ParentId equals parent.Id into parentJoin
+                from parent in parentJoin.DefaultIfEmpty()
+                select new GetActorTeacherDto
                 {
                     Id = teacher.Id,
-                    Code = teacher.Code,  // asegúrate que Actor tiene "Code"
-                    FullName = teacher.FirstName,  // cambia por el campo real de nombre completo
-                    ResearchGroup = researchGroupName ?? "Sin grupo",
-                    InstitutionalEmail = teacher.Email,  // cambia por el campo real
-                    CurrentAdvisees = currentAdvisees,
-                    Availability = currentAdvisees >= maxAdvisees ? "Full" : "Available"
-                };
-            }).ToList();
+                    Code = teacher.Code,
+                    FullName = (teacher.FirstName + " " +
+                                (teacher.SecondName ?? "") + " " +
+                                (teacher.ThirdName ?? "")).Trim(),
+                    ResearchGroup = parent != null ? parent.FirstName : "Sin grupo",
+                    InstitutionalEmail = teacher.Email,
+                    CurrentAdvisees = _dbContext.AdvisoringContract
+                        .Count(c => c.AdvisorId == teacher.Id && c.IsActived),
+                    Availability = "" // lo calculamos después
+                }
+            ).ToListAsync();
+
+            // Calcular disponibilidad en memoria
+            foreach (var item in result)
+            {
+                item.Availability = item.CurrentAdvisees >= maxAdvisees ? "Full" : "Available";
+            }
 
             return result;
         }
+
 
     }
 }

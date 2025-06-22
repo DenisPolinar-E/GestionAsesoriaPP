@@ -58,7 +58,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
 
                     Status = p.RequestPPP?.Status?.Value ?? "Sin estado",
 
-                    StartDate = p.RequestPPP?.StartDate
+                    StartRequest = p.RequestPPP?.StartDate
                 }).ToList();
 
 
