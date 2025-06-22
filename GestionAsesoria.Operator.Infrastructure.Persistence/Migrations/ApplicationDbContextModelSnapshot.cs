@@ -1189,7 +1189,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("AdvisoringContractId");
 
-                    b.HasIndex("PreProfessionalInternshipId");
+                    b.HasIndex("PreProfessionalInternshipId");  
 
                     b.ToTable("PreProfessionalInternshipByAdvisoringContract", null, t =>
                         {
