@@ -88,5 +88,12 @@ namespace GestionAsesoria.Operator.WebApi.Controllers.v1
 
         }
 
+        [HttpGet("getAllResolutionRequestPPP")]
+        public async Task<IActionResult> GetAllResolutionRequestPPPAsync()
+        {
+            var result = await _mediator.Send(new GetAllResolutionRequestPPPQuery());
+            return Ok(result);
+        }
+
     }
 }
