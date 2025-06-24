@@ -1,0 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GestionAsesoria.Operator.Application.DTOs.Follow.Request
+{
+    public class FilterFollowDto
+    {
+        public string FullNameInterId { get; set; }
+        public string FullNameAdviserId { get; set; }
+        public string State { get; set; }
+    }
+}
