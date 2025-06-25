@@ -48,4 +48,28 @@ namespace GestionAsesoria.Operator.Application.Features.RequestPPPs.Queries.GetR
 
 
     }
+    public class GetRequestPPPByIdQuery : IRequest<ListRequestPPPDto?>
+    {
+        public int Id { get; set; }
+
+        public GetRequestPPPByIdQuery(int id)
+        {
+            Id = id;
+        }
+
+        public class Handler : IRequestHandler<GetRequestPPPByIdQuery, ListRequestPPPDto?>
+        {
+            private readonly IUnitOfWork<int> _unitOfWork;
+
+            public Handler(IUnitOfWork<int> unitOfWork)
+            {
+                _unitOfWork = unitOfWork;
+            }
+
+            public async Task<ListRequestPPPDto?> Handle(GetRequestPPPByIdQuery request, CancellationToken cancellationToken)
+            {
+                return await _unitOfWork.RequestPPPRepository.GetForListByIdAsync(request.Id);
+            }
+        }
+    }
 }

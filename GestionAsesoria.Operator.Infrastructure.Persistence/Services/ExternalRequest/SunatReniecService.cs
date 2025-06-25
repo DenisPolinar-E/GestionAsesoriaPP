@@ -11,7 +11,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Services.ExternalR
     public class SunatReniecService : ISunatReniecService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _token = "apis-token-15716.MnDXiiIRXF52pAWdL1BYIozRd6jQQfGs";
+        private readonly string _token = "apis-token-15812.FIZS1FOFZg062CTcAcvKgpLCsWa0g0Pf";
         public SunatReniecService(HttpClient httpClient)
         {
             _httpClient = httpClient;

@@ -1149,11 +1149,27 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("RequestPPPId")
+                        .HasColumnType("int")
+                        .HasComment("ID de la solicitud de Prácticas Pre Profesionales asociada.");
+
+                    b.Property<int>("ResolutionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewCommitteePrimaryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewCommitteeSecondaryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RequestPPPId");
+
+                    b.HasIndex("ResolutionId");
+
+                    b.HasIndex("ReviewCommitteePrimaryId");
+
+                    b.HasIndex("ReviewCommitteeSecondaryId");
 
                     b.ToTable("PreProfessionalInternship", t =>
                         {
@@ -1169,7 +1185,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdvisoringContractId")
+                    b.Property<int?>("AdvisoringContractId")
                         .HasColumnType("int")
                         .HasComment("Identificador del contrato de asesoría asociado.");
 
@@ -1627,7 +1643,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasComment("ID de la colección de documentos asociados.");
 
-                    b.Property<DateTime?>("EndRequest")
+                    b.Property<DateTime?>("EndPreProfessionalPractice")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha prevista de fin de prácticas.");
 
@@ -1659,7 +1675,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Fecha en la que se hizo la solicitud.");
 
-                    b.Property<DateTime?>("StartRequest")
+                    b.Property<DateTime?>("StartPreProfessionalPractice")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha prevista de inicio de prácticas.");
 
@@ -2322,14 +2338,41 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", b =>
                 {
-                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.RequestPPP", "Request")
+                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.RequestPPP", "RequestPPP")
                         .WithMany()
                         .HasForeignKey("RequestPPPId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("PreProfessionalInternship_Request");
+                        .HasConstraintName("FK_PreProfessionalInternship_RequestPPP");
 
-                    b.Navigation("Request");
+                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.DocumentCollection", "DocumentResolution")
+                        .WithMany()
+                        .HasForeignKey("ResolutionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_PreProfessionalInternship_DocumentResolution");
+
+                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.ActorSecondaryRole", "ActorReviewCommitteePrimary")
+                        .WithMany()
+                        .HasForeignKey("ReviewCommitteePrimaryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_PreProfessionalInternship_ReviewCommitteePrimary");
+
+                    b.HasOne("GestionAsesoria.Operator.Domain.Entities.ActorSecondaryRole", "ActorReviewCommitteeSecondary")
+                        .WithMany()
+                        .HasForeignKey("ReviewCommitteeSecondaryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_PreProfessionalInternship_ReviewCommitteeSecondary");
+
+                    b.Navigation("ActorReviewCommitteePrimary");
+
+                    b.Navigation("ActorReviewCommitteeSecondary");
+
+                    b.Navigation("DocumentResolution");
+
+                    b.Navigation("RequestPPP");
                 });
 
             modelBuilder.Entity("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternshipByAdvisoringContract", b =>
@@ -2337,14 +2380,15 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Migrations
                     b.HasOne("GestionAsesoria.Operator.Domain.Entities.AdvisoringContract", "AdvisoringContract")
                         .WithMany("PreProfessionalInternshipContracts")
                         .HasForeignKey("AdvisoringContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_PPPContract_AdvisoringContract");
 
                     b.HasOne("GestionAsesoria.Operator.Domain.Entities.PreProfessionalInternship", "PreProfessionalInternship")
                         .WithMany("PreProfessionalInternshipContracts")
                         .HasForeignKey("PreProfessionalInternshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_PPPContract_Internship");
 
                     b.Navigation("AdvisoringContract");
 
