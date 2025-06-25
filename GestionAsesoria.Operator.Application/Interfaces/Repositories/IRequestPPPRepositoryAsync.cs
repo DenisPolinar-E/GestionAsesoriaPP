@@ -19,5 +19,7 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
         Task<bool> UpdateStateRequestPPPByIdAsync(int id, int newStatusId);
 
         //Task<string> GetEstadoByIdAsync(int id);
+
+        Task<List<ListResolutionRequestPPPDto>> GetAllForResolutionListAsync();
     }
 }

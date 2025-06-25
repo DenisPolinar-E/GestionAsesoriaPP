@@ -226,6 +226,19 @@ public class ApplicationDbContext : AuditableContext
                 .HasForeignKey(p => p.ResolutionId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_PreProfessionalInternship_DocumentResolution");
+            
+            entity.HasOne(p => p.ActorReviewCommitteePrimary)
+                .WithMany()
+                .HasForeignKey(p => p.ReviewCommitteePrimaryId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_ReviewCommitteePrimary");
+
+            entity.HasOne(p => p.ActorReviewCommitteeSecondary)
+                .WithMany()
+                .HasForeignKey(p => p.ReviewCommitteeSecondaryId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_PreProfessionalInternship_ReviewCommitteeSecondary");
+
         });
 
 
@@ -523,7 +536,7 @@ public class ApplicationDbContext : AuditableContext
                 .HasConstraintName("FK_PPPContract_Internship");
         });
 
-
+        
 
         // -----------------------------
         // Entidad: Advance
