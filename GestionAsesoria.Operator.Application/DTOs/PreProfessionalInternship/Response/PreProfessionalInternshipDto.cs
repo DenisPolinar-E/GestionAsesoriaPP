@@ -16,8 +16,8 @@ namespace GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Re
         // cuando se cree la variable para asesor se colocara
 
         // public string Career { get; set; } = ""; // Asumiendo que ResearchArea.FirstName es la carrera
-        public DateTime? StartRequest { get; set; } //cmabiar inicio practica
-        public DateTime? EndRequest { get; set; }
+        public DateTime? StartPreProfessionalPractice { get; set; } //cmabiar inicio practica
+        public DateTime? EndPreProfessionalPractice { get; set; }
         public string Status { get; set; } = "";
 
         // public decimal? Note { get; set; } // Nota vigesimal (0-20) asignada tras revisión
