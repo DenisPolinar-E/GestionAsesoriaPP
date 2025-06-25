@@ -42,14 +42,14 @@ namespace GestionAsesoria.Operator.Tests.Features.Actors.Queries.GetActorTeacher
                 new GetActorTeacherDto 
                 { 
                     Id = 1, 
-                    FirstName = "Juan",
-                    SecondName = "Pérez"
+                    /*FirstName = "Juan",
+                    SecondName = "Pérez"*/
                 },
                 new GetActorTeacherDto 
                 { 
                     Id = 2, 
-                    FirstName = "María",
-                    SecondName = "González"
+                    /*FirstName = "María",
+                    SecondName = "González"*/
                 }
             };
 
@@ -149,14 +149,14 @@ namespace GestionAsesoria.Operator.Tests.Features.Actors.Queries.GetActorTeacher
                 new GetActorTeacherDto 
                 { 
                     Id = 1, 
-                    FirstName = "Juan",
-                    SecondName = "Pérez"
+                    /*FirstName = "Juan",
+                    SecondName = "Pérez"*/
                 },
                 new GetActorTeacherDto 
                 { 
                     Id = 2, 
-                    FirstName = "María",
-                    SecondName = "González"
+                    /*FirstName = "María",
+                    SecondName = "González"*/
                 }
             };
 
