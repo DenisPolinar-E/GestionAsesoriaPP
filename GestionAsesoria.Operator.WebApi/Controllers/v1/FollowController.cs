@@ -7,6 +7,7 @@ using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Reques
 using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Response;
 using GestionAsesoria.Operator.Application.Features.Follow.Queries;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Application.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,22 @@ namespace GestionAsesoria.Operator.Api.Controllers.v1
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
+        [HttpGet("expiring")]
+        public async Task<ActionResult<List<ListFollowDto>>> GetInternshipsExpiringIn7DaysAsync()
+        {
+            try
+            {
+                var result = await _repository.GetInternshipsExpiringIn7DaysAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+       
     }
 }
 
