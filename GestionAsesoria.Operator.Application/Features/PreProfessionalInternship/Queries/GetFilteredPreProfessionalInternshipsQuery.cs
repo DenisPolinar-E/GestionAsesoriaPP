@@ -34,5 +34,4 @@ namespace GestionAsesoria.Operator.Application.Features.PreProfessionalInternshi
             }
         }
     }
-
 }
