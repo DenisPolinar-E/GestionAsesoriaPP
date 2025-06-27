@@ -7,6 +7,7 @@ using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Reques
 using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Response;
 using GestionAsesoria.Operator.Application.Features.Follow.Queries;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Application.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,26 +23,12 @@ namespace GestionAsesoria.Operator.Api.Controllers.v1
         {
             _repository = repository;
         }
-        [HttpGet]
+        [HttpGet("practices")]
         public async Task<ActionResult<List<ListFollowDto>>> GetAllFollowsAsync()
         {
             try
             {
                 var result = await _repository.GetAllFollowsAsync();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-            }
-        }
-
-        [HttpPost("filtered")]
-        public async Task<ActionResult<List<ListFollowDto>>> GetFilteredAsync(FollowFilterDto filters)
-        {
-            try
-            {
-                var result = await _repository.GetFilteredAsync(filters);
                 return Ok(result);
             }
             catch (Exception ex)

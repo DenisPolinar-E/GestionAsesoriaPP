@@ -22,20 +22,4 @@ namespace GestionAsesoria.Operator.Application.Features.Follow.Queries
         }
     }
 
-    public class GetFilteredFollowsQueryHandler : IRequestHandler<GetFilteredFollowsQuery, Result<List<ListFollowDto>>>
-    {
-        private readonly IFollowRepositoryAsync _repository;
-
-        public GetFilteredFollowsQueryHandler(IFollowRepositoryAsync repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task<Result<List<ListFollowDto>>> Handle(GetFilteredFollowsQuery request, CancellationToken cancellationToken)
-        {
-            var data = await _repository.GetFilteredAsync(request.Filters);
-            return await Result<List<ListFollowDto>>.SuccessAsync(data);
-        }
-    }
-
 }

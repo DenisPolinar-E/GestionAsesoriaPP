@@ -12,7 +12,6 @@ namespace GestionAsesoria.Operator.Application.Interfaces.Repositories
     {
         Task<List<ListFollowDto>> GetAllFollowsAsync();
         Task<List<ListFollowDto>> GetProgresPppAsync();
-        Task<List<ListFollowDto>> GetFilteredAsync(FollowFilterDto filters);
 
     }
 }
