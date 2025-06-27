@@ -23,7 +23,7 @@ namespace GestionAsesoria.Operator.Api.Controllers.v1
         {
             _repository = repository;
         }
-        [HttpGet]
+        [HttpGet("practices")]
         public async Task<ActionResult<List<ListFollowDto>>> GetAllFollowsAsync()
         {
             try
@@ -36,36 +36,6 @@ namespace GestionAsesoria.Operator.Api.Controllers.v1
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-
-        [HttpPost("filtered")]
-        public async Task<ActionResult<List<ListFollowDto>>> GetFilteredAsync(FollowFilterDto filters)
-        {
-            try
-            {
-                var result = await _repository.GetFilteredAsync(filters);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-            }
-        }
-
-        [HttpGet("expiring")]
-        public async Task<ActionResult<List<ListFollowDto>>> GetInternshipsExpiringIn7DaysAsync()
-        {
-            try
-            {
-                var result = await _repository.GetInternshipsExpiringIn7DaysAsync();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-            }
-        }
-
-       
     }
 }
 
