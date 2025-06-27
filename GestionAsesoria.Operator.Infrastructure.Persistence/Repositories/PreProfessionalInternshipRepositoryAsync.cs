@@ -26,7 +26,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         {
             try
             {
-                var currentDate = DateTime.Now; // 06:08 PM -05 on Thursday, June 26, 2025
+                var currentDate = DateTime.Now; // 06:55 PM -05 on Thursday, June 26, 2025
                 var entities = await _preProfessionalInternships
                     .Include(p => p.RequestPPP)
                         .ThenInclude(r => r.Student)
@@ -88,7 +88,7 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
         {
             try
             {
-                var currentDate = DateTime.Now; // 06:08 PM -05 on Thursday, June 26, 2025
+                var currentDate = DateTime.Now; // 06:55 PM -05 on Thursday, June 26, 2025
                 var query = _preProfessionalInternships
                     .Include(p => p.RequestPPP)
                         .ThenInclude(r => r.Student)
@@ -128,10 +128,15 @@ namespace GestionAsesoria.Operator.Infrastructure.Persistence.Repositories
                 var dtos = result.Select(p => new FilterPreProfessionalInternshipDto
                 {
                     StudentCode = p.RequestPPP.Student?.Code ?? "Sin código",
+                    StudentName = p.RequestPPP.Student != null
+                        ? $"{p.RequestPPP.Student.FirstName} {p.RequestPPP.Student.SecondName}"
+                        : "Sin estudiante",
                     AdvisorName = p.PreProfessionalInternshipContracts.FirstOrDefault()?.AdvisoringContract?.AdvisorActor != null
                         ? $"{p.PreProfessionalInternshipContracts.FirstOrDefault().AdvisoringContract.AdvisorActor.FirstName} {p.PreProfessionalInternshipContracts.FirstOrDefault().AdvisoringContract.AdvisorActor.SecondName}"
                         : "Sin asesor",
                     CompanyName = p.RequestPPP.Company?.FirstName ?? "Sin empresa",
+                    StartPreProfessionalPractice = p.RequestPPP.StartPreProfessionalPractice,
+                    EndPreProfessionalPractice = p.RequestPPP.EndPreProfessionalPractice,
                     Status = DetermineStatus(p.RequestPPP.StartPreProfessionalPractice, p.RequestPPP.EndPreProfessionalPractice, currentDate)
                 }).ToList();
 
