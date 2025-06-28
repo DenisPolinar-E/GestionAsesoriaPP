@@ -45,5 +45,4 @@ namespace GestionAsesoria.Operator.Domain.Entities
 
         public virtual ICollection<DocumentVersion> DocumentVersions { get; set; }
     }
-
 }

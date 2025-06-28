@@ -18,6 +18,7 @@ namespace GestionAsesoria.Operator.Domain.Entities.ProjectIDI
         [Comment("Comentarios realizados por el evaluador.")]
         public string Comments { get; set; }
 
+        
 
         // LLAVES FORÁNEAS Y PROPIEDAD DE NAVEGACIÓN
 
