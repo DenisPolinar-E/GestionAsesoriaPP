@@ -18,7 +18,10 @@ namespace GestionAsesoria.Operator.Domain.Entities.ProjectIDI
         [Comment("Comentarios realizados por el evaluador.")]
         public string Comments { get; set; }
 
-        
+        // NUEVO: solo si decides separar observaciones de comentarios generales
+        [Comment("Observaciones específicas realizadas al informe del practicante.")]
+        public string? Observation { get; set; } // ← NUEVO, no rompe nada existente
+
 
         // LLAVES FORÁNEAS Y PROPIEDAD DE NAVEGACIÓN
 
@@ -41,6 +44,5 @@ namespace GestionAsesoria.Operator.Domain.Entities.ProjectIDI
         public int? DocumentCollectionId { get; set; }
         [Comment("Entidad DocumentCollection que representa los documentos de la evaluación.")]
         public virtual DocumentCollection DocumentCollection { get; set; }
-        
     }
 }
