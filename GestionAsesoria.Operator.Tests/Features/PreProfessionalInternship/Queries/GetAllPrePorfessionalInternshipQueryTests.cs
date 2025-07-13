@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GestionAsesoria.Operator.Application.DTOs.PreProfessionalInternship.Response;
 using GestionAsesoria.Operator.Application.Interfaces.Repositories;
+using GestionAsesoria.Operator.Application.Interfaces.Services;
 using GestionAsesoria.Operator.Application.Services;
 using GestionAsesoria.Operator.Domain.Entities;
 using Moq;
@@ -21,7 +22,7 @@ namespace GestionAsesoria.Operator.Tests.Services
         {
             _repositoryMock = new Mock<IPreProfessionalInternshipRepositoryAsync>();
             _mapperMock = new Mock<IMapper>();
-            _service = new IPreProfessionalInternshipService(_repositoryMock.Object, _mapperMock.Object);
+            _service = new PreProfessionalInternshipService(_repositoryMock.Object);
         }
 
         [Fact]
