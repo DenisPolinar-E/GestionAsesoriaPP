@@ -81,7 +81,7 @@ try
     builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 
-    ////Configuración de Google Calendar
+    ////Configuraciï¿½n de Google Calendar
     builder.Services.Configure<GoogleCalendarOptions>
     (builder.Configuration.GetSection("GoogleCalendarOptions"));
     //builder.Services.AddScoped<IGoogleCalendarService, GoogleCalendarService>();
@@ -89,7 +89,7 @@ try
     builder.Configuration.AddEnvironmentVariables();
 
     builder.Services.AddScoped<IPreProfessionalInternshipRepositoryAsync, PreProfessionalInternshipRepositoryAsync>();
-    builder.Services.AddScoped<IPreProfessionalInternshipService, IPreProfessionalInternshipService>();
+    builder.Services.AddScoped<IPreProfessionalInternshipService, PreProfessionalInternshipService>();
 
     builder.Services.AddForwarding(_configuration);
     builder.Services.AddCurrentUserService();
@@ -141,7 +141,7 @@ try
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "ERP Academico API v1");
             options.RoutePrefix = "swagger";
-            options.DocumentTitle = "Documentación de la API";
+            options.DocumentTitle = "Documentaciï¿½n de la API";
         });
     }
 
